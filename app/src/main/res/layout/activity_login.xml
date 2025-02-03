@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:id="@+id/main"
+    tools:context=".LoginActivity"
+    android:background="@drawable/background_gradient"
+    android:padding="24dp">
+
+    <!-- Logo -->
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="343dp"
+        android:layout_gravity="center"
+        android:contentDescription="Flash Meet Logo"
+        android:src="@drawable/flashmeet_logo" />
+
+    <!-- Email Input -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:drawableStart="@drawable/baseline_email_24"
+            android:background="@color/white"
+            android:hint="Correo"
+            android:inputType="textEmailAddress" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Password Input -->
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Contraseña"
+            android:background="@color/white"
+
+            android:drawableStart="@drawable/baseline_key_24"
+
+            android:inputType="textPassword" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <!-- Login Button -->
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Iniciar Sesión"
+        android:textAllCaps="false"
+        app:cornerRadius="16dp"
+      style="@style/Widget.MaterialComponents.Button" />
+
+    <!-- Register and Forgot Password Links -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:id="@+id/register_button"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="¿Todavía no estás registrado?"
+            android:textColor="@android:color/white"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            android:textSize="14sp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:id="@+id/forgot_password_button"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="4dp"
+            android:text="¿Olvidaste tu contraseña?"
+            android:textColor="@android:color/white"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+
+            android:textSize="14sp" />
+    </LinearLayout>
+
+</LinearLayout>
