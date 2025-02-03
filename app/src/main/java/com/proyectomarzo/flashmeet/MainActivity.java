@@ -1,9 +1,10 @@
 package com.proyectomarzo.flashmeet;
 
-import android.content.Intent;
+import android.graphics.Outline;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.view.ViewOutlineProvider;
+import android.widget.ImageView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -11,9 +12,8 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    Button btn_login;
-    Button btn_register;
+public class MainActivity extends AppCompatActivity {
+    ImageView profileImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,18 +26,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             return insets;
         });
 
-        btn_login=(Button)findViewById(R.id.btn_login);
-        btn_login.setOnClickListener(this);
-    }
+        profileImage = findViewById(R.id.profile_activity_profile_image);
+        profileImage.setClipToOutline(true);
+        profileImage.setOutlineProvider(new ViewOutlineProvider() {
 
-    @Override
-    public void onClick(View v) {
-
-        if(v.getId()==R.id.btn_login){
-            Intent intent=new Intent(this,ProfileActivity.class);
-            startActivity(intent);
-        }
-
-
+            @Override
+            public void getOutline(View view, Outline outline) {
+                // Define un contorno circular con el radio basado en el tamaño de la imagen
+                int diameter = Math.min(view.getWidth(), view.getHeight());
+                outline.setOval(0, 0, diameter, diameter); // Establecer forma circular
+            }
+        });
     }
 }
