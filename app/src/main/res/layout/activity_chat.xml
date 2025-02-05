@@ -14,6 +14,11 @@
     android:orientation="horizontal"
     app:layout_constraintTop_toTopOf="parent"
     >
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+
+            />
         <ImageView
             android:id="@+id/user_image"
             android:layout_width="75dp"
@@ -53,16 +58,13 @@
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <LinearLayout
-        android:id="@+id/message_linear"
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:orientation="vertical"
+        android:layout_height="0"
+        android:id="@+id/recycler_view"
         app:layout_constraintBottom_toTopOf="@+id/send_linear"
         app:layout_constraintTop_toBottomOf="@+id/user_linear"
-        >
-
-    </LinearLayout>
+        />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/send_linear"
@@ -77,7 +79,7 @@
             android:layout_width="300dp"
             android:layout_height="match_parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="30dp"
             android:background="@color/white"
 
             />
