@@ -1,7 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:background="@color/colorPrimaryVariant"
-    android:layout_height="150dp">
+    android:layout_height="80dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_marginLeft="15dp"
+    android:layout_marginTop="5dp"
+    app:cardBackgroundColor="#20FBD6FE"
+    app:cardCornerRadius="10dp"
+    android:layout_marginRight="15dp"
+    android:outlineAmbientShadowColor="#20FBD6FE"
+    android:outlineSpotShadowColor="#20FBD6FE"
+    android:padding="10dp"
+    android:layout_marginBottom="5dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="3"
+            android:id="@+id/chat_profile_image"
+
+            >
+
+        </ImageView>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="7"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/chat_name"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="left|center"
+                android:textSize="16dp"
+                android:textStyle="bold"
+
+
+                android:layout_weight="7"
+                android:text="Pedro">
+
+            </TextView>
+
+            <TextView
+                android:id="@+id/chat_last_message"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="left|center"
+
+
+                android:layout_weight="7"
+                android:text="Pedro">
+
+            </TextView>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
 
 </androidx.cardview.widget.CardView>

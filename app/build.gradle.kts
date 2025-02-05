@@ -6,6 +6,10 @@ android {
     namespace = "com.proyectomarzo.flashmeet"
     compileSdk = 35
 
+    buildFeatures {
+        viewBinding = true
+    }
+
     defaultConfig {
         applicationId = "com.proyectomarzo.flashmeet"
         minSdk = 24
@@ -32,6 +36,9 @@ android {
 }
 
 dependencies {
+
+    implementation("com.github.bumptech.glide:glide:4.16.0") // o la versión más reciente de Glide
+    annotationProcessor("com.github.bumptech.glide:compiler:4.16.0") // o la versión más reciente de Glide
 
     implementation(libs.appcompat)
     implementation(libs.material)

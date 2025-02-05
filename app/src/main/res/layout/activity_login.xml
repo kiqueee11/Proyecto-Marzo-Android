@@ -59,7 +59,7 @@
         android:text="Iniciar Sesión"
         android:textAllCaps="false"
         app:cornerRadius="16dp"
-      style="@style/Widget.MaterialComponents.Button" />
+      style="@style/Widget.Material3.Button.ElevatedButton" />
 
     <!-- Register and Forgot Password Links -->
     <LinearLayout
@@ -74,7 +74,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="¿Todavía no estás registrado?"
-            android:textColor="@android:color/white"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             android:textSize="14sp" />
 
@@ -85,7 +84,6 @@
             android:layout_gravity="center"
             android:layout_marginTop="4dp"
             android:text="¿Olvidaste tu contraseña?"
-            android:textColor="@android:color/white"
             style="@style/Widget.MaterialComponents.Button.TextButton"
 
             android:textSize="14sp" />
