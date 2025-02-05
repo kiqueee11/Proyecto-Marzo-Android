@@ -16,6 +16,12 @@
             android:name=".ChatActivity"
             android:exported="false" />
         <activity
+            android:name=".EditProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".SettingsActivity"
+            android:exported="false" />
+        <activity
             android:name=".FriendListActivity"
             android:exported="false" />
         <activity
