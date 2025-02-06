@@ -37,6 +37,7 @@ public class FriendListActivity extends AppCompatActivity {
             return insets;
         });
 
+
         for (int i = 0; i < 1000; i++) {
             friends.add(i);
 
