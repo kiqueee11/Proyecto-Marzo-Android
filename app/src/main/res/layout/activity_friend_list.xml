@@ -6,6 +6,7 @@
     android:background="@drawable/background_gradient"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="24dp"
     tools:context=".FriendListActivity">
 
     <androidx.recyclerview.widget.RecyclerView

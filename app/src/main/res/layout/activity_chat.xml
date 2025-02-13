@@ -19,7 +19,7 @@
             android:layout_width="75dp"
             android:layout_height="match_parent"
             android:src="@drawable/ic_arrow_back"
-            android:background="transparent"
+            android:background="@color/transparent_background"
             app:layout_constraintStart_toStartOf="parent"
 
 
@@ -54,7 +54,7 @@
             android:layout_height="match_parent"
             android:src="@drawable/baseline_settings_24"
             android:layout_margin="15dp"
-            android:background="@android:color/transparent"
+            android:background="@color/transparent_background"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             />
@@ -96,7 +96,7 @@
             android:layout_height="match_parent"
 
             app:layout_constraintEnd_toEndOf="parent"
-            android:background="@android:color/transparent"
+            android:background="@color/transparent_background"
             android:src="@drawable/baseline_play_arrow_24"
             />
     </androidx.constraintlayout.widget.ConstraintLayout>

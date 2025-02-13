@@ -7,8 +7,8 @@
     android:orientation="vertical"
     android:background="@drawable/background_gradient"
     tools:context=".RegisterActivity"
-    android:id="@+id/sign_up_activity"
-    android:padding="24dp">
+    android:padding="24dp"
+    android:id="@+id/sign_up_activity">
 
     <!-- Logo -->
     <ImageView
