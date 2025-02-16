@@ -79,6 +79,10 @@ public class LoginActivity extends AppCompatActivity {
         if (token != null) {
             navigateToChatActivity();
         }
+        if(v.getId()==R.id.register_button){
+            Intent intent=new Intent(this, RegisterActivity.class);
+            startActivity(intent);
+        }
 
         binding.btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override

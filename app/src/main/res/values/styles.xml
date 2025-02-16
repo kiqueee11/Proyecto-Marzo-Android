@@ -1,41 +1,4 @@
-
 <resources>
-    <!-- Definición de los colores -->
-    <color name="colorPrimary">#6D3E81</color> <!-- Morado oscuro -->
-    <color name="colorPrimaryVariant">#9B2D52</color> <!-- Rosa más oscuro -->
-    <color name="colorSecondary">#FFC0CB</color> <!-- Rosa suave -->
-    <color name="colorSecondaryVariant">#D8A6D1</color> <!-- Lavanda claro -->
-    <color name="colorTertiary">#F2D3E1</color> <!-- Rosa pálido -->
-    <color name="colorError">#D32F2F</color> <!-- Rojo intenso -->
-    <color name="backgroundStart">#A479AF</color> <!-- Morado de fondo -->
-    <color name="backgroundEnd">#E35D66</color> <!-- Rosa de fondo -->
 
-    <!-- Tema principal de la aplicación -->
-    <style name="AppTheme" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Definir el color de fondo de la aplicación -->
-        <item name="android:windowBackground">@drawable/background_gradient</item> <!-- El gradiente -->
-
-        <!-- Definir colores para los elementos de la UI -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryVariant">@color/colorPrimaryVariant</item>
-        <item name="colorSecondary">@color/colorSecondary</item>
-        <item name="colorSecondaryVariant">@color/colorSecondaryVariant</item>
-        <item name="colorTertiary">@color/colorTertiary</item>
-        <item name="colorError">@color/colorError</item>
-
-        <!-- Definir colores para los textos -->
-        <item name="android:textColorPrimary">?android:attr/textColorPrimary</item>
-        <item name="android:textColorSecondary">?android:attr/textColorSecondary</item>
-        <item name="android:textColorTertiary">?android:attr/textColorTertiary</item>
-
-        <!-- Establecer los colores de los botones -->
-        <item name="android:buttonStyle">@style/ButtonStyle</item>
-    </style>
-
-    <!-- Estilo para los botones -->
-    <style name="ButtonStyle">
-        <item name="android:backgroundTint">@color/colorPrimary</item>
-        <item name="android:textColor">#FFFFFF</item> <!-- Blanco para texto en botones -->
-    </style>
 
 </resources>
