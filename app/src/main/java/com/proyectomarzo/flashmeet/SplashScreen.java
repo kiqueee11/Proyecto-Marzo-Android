@@ -7,13 +7,8 @@ import android.os.Looper;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
-import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
@@ -23,37 +18,25 @@ public class SplashScreen extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_splash_screen);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
 
-    launchMain();
+        // Animación para el logo
+        ImageView splashLogo = findViewById(R.id.splashLogo);
+        Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
+        splashLogo.startAnimation(fadeIn);
 
-    Animation gradientColor = AnimationUtils.loadAnimation(this,R.anim.gradient_colour);
-    ImageView splashLogo = findViewById(R.id.splashLogo);
-        splashLogo.startAnimation(gradientColor);
-
-    ImageView glideBackground = findViewById(R.id.splashGlideBackground);
+        // Carga de imagen de fondo con Glide
+        ImageView glideBackground = findViewById(R.id.splashGlideBackground);
         Glide.with(this)
-                .load("@drawable/flashmeet_logo")
-                .transition(DrawableTransitionOptions.withCrossFade(800))
+                .load(R.drawable.gradient) // Asegúrate de tener una imagen en drawable
+                .transition(DrawableTransitionOptions.withCrossFade(1000))
                 .centerCrop()
                 .into(glideBackground);
-}
 
-    public void launchMain(){
-        new Handler(Looper.getMainLooper()).postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                Intent intent = new Intent(SplashScreen.this, LoginActivity.class);
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                startActivity(intent);
-            }
-        },5000);
+        // Llamamos a launchMain después de 3 segundos
+        new Handler(Looper.getMainLooper()).postDelayed(() -> {
+            startActivity(new Intent(SplashScreen.this, LoginActivity.class));
+            finish(); // Cierra SplashScreen
+        }, 3000);
     }
 }

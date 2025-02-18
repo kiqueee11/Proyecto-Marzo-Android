@@ -60,7 +60,7 @@
             android:layout_weight="1"
             android:hint="Escribe un mensaje"
             android:padding="12dp"
-            android:background="@drawable/bg_edit_text"
+            android:background="@color/transparent_background"
             android:maxLines="4" />
 
         <com.google.android.material.button.MaterialButton
