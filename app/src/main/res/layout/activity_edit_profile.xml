@@ -1,203 +1,273 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+xmlns:app="http://schemas.android.com/apk/res-auto"
+xmlns:tools="http://schemas.android.com/tools"
+android:id="@+id/main"
+android:background="@drawable/background_gradient"
+android:layout_width="match_parent"
+android:layout_height="match_parent"
+android:padding="12dp"
+tools:context=".EditProfileActivity">
+
+<!-- Top Bar -->
+<androidx.appcompat.widget.Toolbar
+    android:id="@+id/toolbar"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/background_gradient"
-    android:orientation="vertical"
-    android:padding="24dp"
-    tools:context=".EditProfileActivity">
+    android:layout_height="?attr/actionBarSize"
+    android:layout_marginBottom="8dp"
+    app:layout_constraintTop_toTopOf="parent">
 
-    <!-- Botón de retroceso -->
-    <ImageButton
-        android:id="@+id/btnBack"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:src="@drawable/ic_arrow_back"
-        android:contentDescription="Volver"/>
-<!--        android:tint="@android:color/white" -->
-
-
-    <!-- Título -->
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Editar perfil"
-        android:textAppearance="?attr/textAppearanceHeadlineMedium"
-        android:textColor="@android:color/white"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="16dp" />
-
-    <!-- Sección de Fotos -->
     <LinearLayout
+        android:id="@+id/titleContainer"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:orientation="horizontal"
-        android:layout_marginBottom="16dp">
+        android:gravity="start|center_vertical">
 
-        <!-- Galería de fotos -->
-        <GridLayout
-            android:id="@+id/gridGallery"
-            android:layout_width="match_parent"
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_arrow_back"
+            android:contentDescription="Volver"
+            android:padding="12dp"/>
+
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:columnCount="3"
-            android:rowCount="2"
-            android:layout_marginTop="16dp"
-            android:layout_gravity="center"
-            >
-
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/ic_camera"
-                android:layout_margin="4dp" />
-
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/ic_camera"
-                android:layout_margin="4dp" />
-
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/ic_camera"
-                android:layout_margin="4dp" />
-
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/ic_camera"
-                android:layout_margin="4dp" />
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/ic_camera"
-                android:layout_margin="4dp" />
-
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/ic_camera"
-                android:layout_margin="4dp" />
-        </GridLayout>
+            android:text="Perfil"
+            android:textAppearance="?attr/textAppearanceHeadlineMedium"
+            android:textColor="@android:color/white"
+            android:gravity="center"
+            android:layout_marginStart="8dp"/>
     </LinearLayout>
+</androidx.appcompat.widget.Toolbar>
 
-    <!-- Card: Datos Personales -->
-    <com.google.android.material.card.MaterialCardView
+<!-- Profile Image Background -->
+<ImageView
+    android:id="@+id/img_profile_background"
+    android:layout_width="match_parent"
+    android:layout_height="220dp"
+    android:scaleType="centerCrop"
+    app:cardCornerRadius="16dp"
+    app:layout_constraintTop_toBottomOf="@id/toolbar"
+    android:src="@drawable/perfil" />
+
+<!-- Profile CardView (Fixed) -->
+<androidx.cardview.widget.CardView
+    android:id="@+id/card_profile"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="-40dp"
+    app:cardCornerRadius="16dp"
+    android:layout_marginHorizontal="5dp"
+    app:cardElevation="4dp"
+    app:layout_constraintTop_toBottomOf="@id/img_profile_background"
+    android:background="@android:color/white">
+
+    <!-- ScrollView dentro de la CardView -->
+    <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="12dp">
+        android:fillViewport="true"
+        android:padding="20dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
             android:orientation="vertical">
 
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Datos personales"
-                android:textAppearance="?attr/textAppearanceTitleMedium"
-                android:textColor="@color/black"
-                android:layout_marginBottom="8dp" />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="16dp">
 
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nombre: Enrique Martín"
-                android:textAppearance="?attr/textAppearanceBodyLarge"
-                android:textColor="@color/black" />
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Enrique Martin"
+                        android:textColor="@color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Edad: 26"
-                android:textAppearance="?attr/textAppearanceBodyLarge"
-                android:textColor="@color/black" />
+                    <TextView
+                        android:id="@+id/tv_age"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="26"
+                        android:textColor="@color/black"
+                        android:layout_below="@id/tv_name"
+                        android:layout_marginTop="4dp"
+                        android:textSize="16sp" />
 
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sexo: Masculino"
-                android:textAppearance="?attr/textAppearanceBodyLarge"
-                android:textColor="@color/black" />
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
+                    <TextView
+                        android:id="@+id/tv_gender"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Hombre"
+                        android:layout_marginStart="24dp"
+                        android:layout_below="@id/tv_name"
+                        android:layout_marginTop="4dp"
+                        android:layout_toEndOf="@id/tv_age"
+                        android:textSize="16sp" />
 
-    <!-- Descripción -->
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Descripción"
-        android:textAppearance="?attr/textAppearanceTitleMedium"
-        android:textColor="@android:color/white"
-        android:layout_marginBottom="8dp" />
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etDescription"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Escribe una breve descripción"
-            android:inputType="textMultiLine" />
-    </com.google.android.material.textfield.TextInputLayout>
-
-<!--    &lt;!&ndash; Redes Sociales &ndash;&gt;-->
-<!--    <com.google.android.material.textview.MaterialTextView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:text="Redes Sociales"-->
-<!--        android:textAppearance="?attr/textAppearanceTitleMedium"-->
-<!--        android:textColor="@android:color/white"-->
-<!--        android:layout_marginTop="16dp"-->
-<!--        android:layout_marginBottom="8dp" />-->
-
-<!--    <LinearLayout-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:orientation="horizontal">-->
-
-<!--        <ImageButton-->
-<!--            android:id="@+id/btnFacebook"-->
-<!--            android:layout_width="48dp"-->
-<!--            android:layout_height="48dp"-->
-<!--            android:background="?attr/selectableItemBackgroundBorderless"-->
-<!--            android:src="@drawable/ic_facebook"-->
-<!--            android:contentDescription="Facebook"-->
-<!--            android:tint="@android:color/white"-->
-
-<!--            />-->
+                    <ImageButton
+                        android:id="@+id/btn_edit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:src="@drawable/ic_edit"
+                        android:padding="8dp"
+                        android:background="@null" />
+                </RelativeLayout>
 
 
-<!--        <ImageButton-->
-<!--            android:id="@+id/btnTwitter"-->
-<!--            android:layout_width="48dp"-->
-<!--            android:layout_height="48dp"-->
-<!--            android:background="?attr/selectableItemBackgroundBorderless"/>-->
-<!--&lt;!&ndash;            android:src="@drawable/ic_twitter"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:contentDescription="Twitter"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:tint="@android:color/white" &ndash;&gt;-->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Descripción"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
+                <TextView
+                    android:id="@+id/tv_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginBottom="20dp"
+                    android:text="Lorem ipsum dolor sit amet..." />
 
-<!--        <ImageButton-->
-<!--            android:id="@+id/btnInstagram"-->
-<!--            android:layout_width="48dp"-->
-<!--            android:layout_height="48dp"-->
-<!--            android:background="?attr/selectableItemBackgroundBorderless"/>-->
-<!--&lt;!&ndash;            android:src="@drawable/ic_instagram"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:contentDescription="Instagram"&ndash;&gt;-->
-<!--&lt;!&ndash;            android:tint="@android:color/white" &ndash;&gt;-->
+                <!-- Photos -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fotos"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
-<!--    </LinearLayout>-->
+                <GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:columnCount="3"
+                    android:rowCount="2"
+                    android:layout_marginBottom="20dp">
 
-</LinearLayout>
+                    <ImageView
+                        android:id="@+id/img_photo1"
+                        android:layout_width="0dp"
+                        android:layout_height="100dp"
+                        android:layout_columnWeight="1"
+                        android:layout_margin="4dp"
+                        android:background="@drawable/perfil"
+                        android:padding="24dp" />
+
+                    <ImageView
+                        android:id="@+id/img_photo2"
+                        android:layout_width="0dp"
+                        android:layout_height="100dp"
+                        android:layout_columnWeight="1"
+                        android:layout_margin="4dp"
+                        android:background="@drawable/photo_placeholder"
+                        android:padding="24dp" />
+
+                    <ImageView
+                        android:id="@+id/img_photo3"
+                        android:layout_width="0dp"
+                        android:layout_height="100dp"
+                        android:layout_columnWeight="1"
+                        android:layout_margin="4dp"
+                        android:background="@drawable/photo_placeholder"
+                        android:padding="24dp" />
+                    <ImageView
+                        android:id="@+id/img_photo4"
+                        android:layout_width="0dp"
+                        android:layout_height="100dp"
+                        android:layout_columnWeight="1"
+                        android:layout_margin="4dp"
+                        android:background="@drawable/photo_placeholder"
+                        android:padding="24dp" />
+                    <ImageView
+                        android:id="@+id/img_photo5"
+                        android:layout_width="0dp"
+                        android:layout_height="100dp"
+                        android:layout_columnWeight="1"
+                        android:layout_margin="4dp"
+                        android:background="@drawable/photo_placeholder"
+                        android:padding="24dp" />
+                    <ImageView
+                        android:id="@+id/img_photo6"
+                        android:layout_width="0dp"
+                        android:layout_height="100dp"
+                        android:layout_columnWeight="1"
+                        android:layout_margin="4dp"
+                        android:background="@drawable/photo_placeholder"
+                        android:padding="24dp" />
+                </GridLayout>
+
+                <!-- Social Media -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Redes Sociales"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="8dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="8dp">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center"
+                            android:layout_marginTop="12dp">
+
+                            <ImageView
+                                android:id="@+id/img_instagram"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:src="@drawable/ic_instagram"
+                                android:layout_marginEnd="32dp" />
+
+                            <ImageView
+                                android:id="@+id/img_facebook"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:src="@drawable/ic_facebook"
+                                android:layout_marginEnd="32dp" />
+
+                            <ImageView
+                                android:id="@+id/img_twitter"
+                                android:layout_width="32dp"
+                                android:layout_height="32dp"
+                                android:src="@drawable/ic_twitter" />
+                        </LinearLayout>
+
+                        <ImageButton
+                            android:id="@+id/btn_edit2"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:layout_centerVertical="true"
+                            android:src="@drawable/ic_edit"
+                            android:padding="8dp"
+                            android:background="@null" />
+
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </ScrollView>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>

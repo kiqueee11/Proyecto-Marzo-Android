@@ -20,8 +20,8 @@
     <!-- Logo animado -->
     <ImageView
         android:id="@+id/splashLogo"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
+        android:layout_width="400dp"
+        android:layout_height="400dp"
         android:src="@drawable/flashmeet_logo"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
