@@ -1,135 +1,304 @@
 package com.proyectomarzo.flashmeet;
+//
+//import android.os.Bundle;
+//import android.view.View;
+//import android.widget.Toast;
+//
+//import androidx.appcompat.app.AppCompatActivity;
+//import androidx.recyclerview.widget.LinearLayoutManager;
+//
+//import com.proyectomarzo.flashmeet.adapter.MessageAdapter;
+//import com.proyectomarzo.flashmeet.api.ApiClient;
+//import com.proyectomarzo.flashmeet.api.ApiService;
+//import com.proyectomarzo.flashmeet.databinding.ActivityChatBinding;
+//import com.proyectomarzo.flashmeet.models.Message;
+//import com.proyectomarzo.flashmeet.models.MessageRequest;
+//import com.proyectomarzo.flashmeet.models.MessageResponse;
+//
+//import java.util.ArrayList;
+//import java.util.List;
+//
+//import retrofit2.Call;
+//import retrofit2.Callback;
+//import retrofit2.Response;
+//
+//public class ChatActivity extends AppCompatActivity {
+//
+//    private ActivityChatBinding binding;
+//    private ApiService apiService;
+//    private List<Message> messageList = new ArrayList<>();
+//    private MessageAdapter adapter;
+//    private String token;
+//    private String email;
+//    private String recipientEmail;
+//
+//    @Override
+//    protected void onCreate(Bundle savedInstanceState) {
+//        super.onCreate(savedInstanceState);
+//        binding = ActivityChatBinding.inflate(getLayoutInflater());
+//        setContentView(binding.getRoot());
+//
+//        // Obtener token guardado
+//        token = getSharedPreferences("ChatAppPrefs", MODE_PRIVATE).getString("token", "");
+//        email = getSharedPreferences("ChatAppPrefs", MODE_PRIVATE).getString("email", "");
+//
+//        // Configurar RecyclerView
+//        adapter = new MessageAdapter(messageList, email);
+//        binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        binding.recyclerView.setAdapter(adapter);
+//
+//        apiService = ApiClient.getClient().create(ApiService.class);
+//
+//        // Permitir seleccionar destinatario
+//        binding.etRecipient.setVisibility(View.VISIBLE);
+//
+//        binding.btnSend.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                String content = binding.etMessage.getText().toString().trim();
+//                if (content.isEmpty()) return;
+//
+//                if (recipientEmail == null || recipientEmail.isEmpty()) {
+//                    recipientEmail = binding.etRecipient.getText().toString().trim();
+//                    if (recipientEmail.isEmpty()) {
+//                        Toast.makeText(ChatActivity.this, "Ingrese correo del destinatario", Toast.LENGTH_SHORT).show();
+//                        return;
+//                    }
+//                    binding.etRecipient.setVisibility(View.GONE);
+//                    binding.tvRecipient.setText("Chateando con: " + recipientEmail);
+//                    binding.tvRecipient.setVisibility(View.VISIBLE);
+//                    loadMessages();
+//                }
+//
+//                sendMessage(content);
+//                binding.etMessage.setText("");
+//            }
+//        });
+//    }
+//
+//    private void loadMessages() {
+//        binding.progressBar.setVisibility(View.VISIBLE);
+//
+//        Call<List<Message>> call = apiService.getMessages("Bearer " + token, recipientEmail);
+//        call.enqueue(new Callback<List<Message>>() {
+//            @Override
+//            public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
+//                binding.progressBar.setVisibility(View.GONE);
+//
+//                if (response.isSuccessful() && response.body() != null) {
+//                    messageList.clear();
+//                    messageList.addAll(response.body());
+//                    adapter.notifyDataSetChanged();
+//                    binding.recyclerView.scrollToPosition(messageList.size() - 1);
+//                } else {
+//                    Toast.makeText(ChatActivity.this, "Error al cargar mensajes", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<Message>> call, Throwable t) {
+//                binding.progressBar.setVisibility(View.GONE);
+//                Toast.makeText(ChatActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
+//
+//    private void sendMessage(String content) {
+//        MessageRequest messageRequest = new MessageRequest(recipientEmail, content);
+//
+//        Call<MessageResponse> call = apiService.sendMessage("Bearer " + token, messageRequest);
+//        call.enqueue(new Callback<MessageResponse>() {
+//            @Override
+//            public void onResponse(Call<MessageResponse> call, Response<MessageResponse> response) {
+//                if (response.isSuccessful() && response.body() != null) {
+//                    Message newMessage = new Message(
+//                            response.body().getId(),
+//                            email,
+//                            recipientEmail,
+//                            content,
+//                            response.body().getTimestamp()
+//                    );
+//                    messageList.add(newMessage);
+//                    adapter.notifyItemInserted(messageList.size() - 1);
+//                    binding.recyclerView.scrollToPosition(messageList.size() - 1);
+//                } else {
+//                    Toast.makeText(ChatActivity.this, "Error al enviar mensaje", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<MessageResponse> call, Throwable t) {
+//                Toast.makeText(ChatActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+//            }
+//        });
+//    }
+//}
+
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.PopupMenu;
+import android.widget.TextView;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
+import com.proyectomarzo.flashmeet.R;
 import com.proyectomarzo.flashmeet.adapter.MessageAdapter;
-import com.proyectomarzo.flashmeet.api.ApiClient;
-import com.proyectomarzo.flashmeet.api.ApiService;
-import com.proyectomarzo.flashmeet.databinding.ActivityChatBinding;
 import com.proyectomarzo.flashmeet.models.Message;
-import com.proyectomarzo.flashmeet.models.MessageRequest;
-import com.proyectomarzo.flashmeet.models.MessageResponse;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import java.util.Random;
 
 public class ChatActivity extends AppCompatActivity {
 
-    private ActivityChatBinding binding;
-    private ApiService apiService;
-    private List<Message> messageList = new ArrayList<>();
-    private MessageAdapter adapter;
-    private String token;
-    private String email;
-    private String recipientEmail;
+    private RecyclerView recyclerView;
+    private MessageAdapter messageAdapter;
+    private List<Message> messageList;
+    private EditText messageInput;
+    private ImageButton sendButton, backButton, settingsButton;
+    private ImageView userImage;
+    private TextView userName;
+    private Random random;
+    private Handler handler;
+
+    private static final int REVEAL_DELAY = 30 * 1000; // 5 minutos en milisegundos
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = ActivityChatBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
+        setContentView(R.layout.activity_chat);
 
-        // Obtener token guardado
-        token = getSharedPreferences("ChatAppPrefs", MODE_PRIVATE).getString("token", "");
-        email = getSharedPreferences("ChatAppPrefs", MODE_PRIVATE).getString("email", "");
+        recyclerView = findViewById(R.id.recycler_view);
+        messageInput = findViewById(R.id.text_input);
+        sendButton = findViewById(R.id.send);
+        backButton = findViewById(R.id.arrow);
+        settingsButton = findViewById(R.id.settings);
+        userImage = findViewById(R.id.user_image);
+        userName = findViewById(R.id.user_name);
 
-        // Configurar RecyclerView
-        adapter = new MessageAdapter(messageList, email);
-        binding.recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        binding.recyclerView.setAdapter(adapter);
+        messageList = new ArrayList<>();
+        messageAdapter = new MessageAdapter(messageList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(messageAdapter);
 
-        apiService = ApiClient.getClient().create(ApiService.class);
+        random = new Random();
+        handler = new Handler(Looper.getMainLooper());
 
-        // Permitir seleccionar destinatario
-        binding.etRecipient.setVisibility(View.VISIBLE);
+        sendButton.setOnClickListener(v -> sendMessage());
+        backButton.setOnClickListener(v -> finish()); // Cierra la actividad
 
-        binding.btnSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                String content = binding.etMessage.getText().toString().trim();
-                if (content.isEmpty()) return;
+        settingsButton.setVisibility(View.GONE); // Ocultar ajustes al inicio
+        settingsButton.setOnClickListener(v -> showSettingsMenu());
 
-                if (recipientEmail == null || recipientEmail.isEmpty()) {
-                    recipientEmail = binding.etRecipient.getText().toString().trim();
-                    if (recipientEmail.isEmpty()) {
-                        Toast.makeText(ChatActivity.this, "Ingrese correo del destinatario", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    binding.etRecipient.setVisibility(View.GONE);
-                    binding.tvRecipient.setText("Chateando con: " + recipientEmail);
-                    binding.tvRecipient.setVisibility(View.VISIBLE);
-                    loadMessages();
-                }
-
-                sendMessage(content);
-                binding.etMessage.setText("");
-            }
-        });
+        // Iniciar el temporizador de 5 minutos para mostrar el popup
+        handler.postDelayed(this::showIdentityPopup, REVEAL_DELAY);
     }
 
-    private void loadMessages() {
-        binding.progressBar.setVisibility(View.VISIBLE);
+    private void sendMessage() {
+        String messageText = messageInput.getText().toString().trim();
+        if (!messageText.isEmpty()) {
+            messageList.add(new Message(messageText, "Me", Message.TYPE_SENT));
+            messageAdapter.notifyItemInserted(messageList.size() - 1);
+            recyclerView.smoothScrollToPosition(messageList.size() - 1);
+            messageInput.setText("");
 
-        Call<List<Message>> call = apiService.getMessages("Bearer " + token, recipientEmail);
-        call.enqueue(new Callback<List<Message>>() {
-            @Override
-            public void onResponse(Call<List<Message>> call, Response<List<Message>> response) {
-                binding.progressBar.setVisibility(View.GONE);
-
-                if (response.isSuccessful() && response.body() != null) {
-                    messageList.clear();
-                    messageList.addAll(response.body());
-                    adapter.notifyDataSetChanged();
-                    binding.recyclerView.scrollToPosition(messageList.size() - 1);
-                } else {
-                    Toast.makeText(ChatActivity.this, "Error al cargar mensajes", Toast.LENGTH_SHORT).show();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<List<Message>> call, Throwable t) {
-                binding.progressBar.setVisibility(View.GONE);
-                Toast.makeText(ChatActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
+            simulateResponse();
+        }
     }
 
-    private void sendMessage(String content) {
-        MessageRequest messageRequest = new MessageRequest(recipientEmail, content);
+    private void simulateResponse() {
+        recyclerView.postDelayed(() -> {
+            String botResponse = getRandomResponse();
+            messageList.add(new Message(botResponse, "Bot", Message.TYPE_RECEIVED));
+            messageAdapter.notifyItemInserted(messageList.size() - 1);
+            recyclerView.smoothScrollToPosition(messageList.size() - 1);
+        }, 1500);
+    }
 
-        Call<MessageResponse> call = apiService.sendMessage("Bearer " + token, messageRequest);
-        call.enqueue(new Callback<MessageResponse>() {
-            @Override
-            public void onResponse(Call<MessageResponse> call, Response<MessageResponse> response) {
-                if (response.isSuccessful() && response.body() != null) {
-                    Message newMessage = new Message(
-                            response.body().getId(),
-                            email,
-                            recipientEmail,
-                            content,
-                            response.body().getTimestamp()
-                    );
-                    messageList.add(newMessage);
-                    adapter.notifyItemInserted(messageList.size() - 1);
-                    binding.recyclerView.scrollToPosition(messageList.size() - 1);
-                } else {
-                    Toast.makeText(ChatActivity.this, "Error al enviar mensaje", Toast.LENGTH_SHORT).show();
-                }
+    private String getRandomResponse() {
+        String[] responses = {
+                "¡Interesante! Cuéntame más.",
+                "No estoy seguro, ¿qué piensas tú?",
+                "Eso suena genial.",
+                "Jajaja, buena esa.",
+                "¿Podrías explicarlo mejor?",
+                "Me gusta cómo piensas.",
+                "¿Tienes más detalles?",
+                "Eso es un misterio para mí.",
+                "¡Wow! No me lo esperaba.",
+                "Parece algo importante, ¿cierto?"
+        };
+        return responses[random.nextInt(responses.length)];
+    }
+
+    private void showIdentityPopup() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Revelar identidad")
+                .setMessage("¿Quieres revelar la identidad de la persona con la que chateas?")
+                .setPositiveButton("Sí", (dialog, which) -> revealIdentity())
+                .setNegativeButton("No", (dialog, which) -> resetChat())
+                .setCancelable(false)
+                .show();
+    }
+
+    private void revealIdentity() {
+        userImage.setVisibility(View.VISIBLE);
+        userName.setVisibility(View.VISIBLE);
+        settingsButton.setVisibility(View.VISIBLE); // Mostrar botón de ajustes
+
+        userImage.setImageResource(R.drawable.mock_user); // Imagen ficticia
+        userName.setText("Usuario Misterioso"); // Nombre ficticio
+    }
+
+    private void resetChat() {
+        messageList.clear();
+        messageAdapter.notifyDataSetChanged();
+    }
+
+    private void showSettingsMenu() {
+        PopupMenu popupMenu = new PopupMenu(this, settingsButton);
+        popupMenu.getMenuInflater().inflate(R.menu.chat_settings_menu, popupMenu.getMenu());
+
+        popupMenu.setOnMenuItemClickListener(item -> {
+            int id = item.getItemId();
+
+            if (id == R.id.add_friend) {
+                addFriend();
+                return true;
+            } else if (id == R.id.view_profile) {
+                viewProfile();
+                return true;
             }
 
-            @Override
-            public void onFailure(Call<MessageResponse> call, Throwable t) {
-                Toast.makeText(ChatActivity.this, "Error: " + t.getMessage(), Toast.LENGTH_SHORT).show();
-            }
+            return false;
         });
+
+        popupMenu.show();
+    }
+
+    private void addFriend() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Solicitud enviada")
+                .setMessage("Has enviado una solicitud de amistad.")
+                .setPositiveButton("Aceptar", null)
+                .show();
+    }
+
+    private void viewProfile() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Perfil del usuario")
+                .setMessage("Nombre: Usuario Misterioso\nEdad: 25\nUbicación: Desconocida")
+                .setPositiveButton("Cerrar", null)
+                .show();
     }
 }

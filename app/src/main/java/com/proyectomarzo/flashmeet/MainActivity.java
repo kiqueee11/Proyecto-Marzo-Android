@@ -54,6 +54,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         settingsButton.setOnClickListener(this);
         friendsButton.setOnClickListener(this);
+        meetButton.setOnClickListener(this);
 
         // Configuración de la imagen de perfil con borde y destello
         profileImage = findViewById(R.id.profile_activity_profile_image);
@@ -72,8 +73,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         settingsButton.setBackgroundColor(getResources().getColor(android.R.color.transparent));
         friendsButton.setBackgroundColor(getResources().getColor(android.R.color.transparent));
 
-        // Configurar el botón Meet
-        meetButton.setOnClickListener(v -> startVibrating());
+
 
         // Configurar la acción al presionar la imagen de perfil
         profileImage.setOnClickListener(v -> {
@@ -82,43 +82,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
     }
 
-    // Método para iniciar la vibración intermitente
-    private void startVibrating() {
-        Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
-        if (vibrator != null && vibrator.hasVibrator()) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                // Vibración continua intermitente (500ms de vibración y 500ms de pausa)
-                vibrateRunnable = new Runnable() {
-                    @Override
-                    public void run() {
-                        vibrator.vibrate(VibrationEffect.createOneShot(500, VibrationEffect.DEFAULT_AMPLITUDE)); // 500ms vibración
-                        handler.postDelayed(this, 1000); // Repite la vibración cada 1000ms (1 segundo)
-                    }
-                };
-                handler.post(vibrateRunnable); // Comienza la vibración
-            } else {
-                // Para versiones anteriores a Android 8.0 (API 26)
-                vibrateRunnable = new Runnable() {
-                    @Override
-                    public void run() {
-                        vibrator.vibrate(500); // 500ms vibración
-                        handler.postDelayed(this, 1000); // Repite la vibración cada 1000ms (1 segundo)
-                    }
-                };
-                handler.post(vibrateRunnable); // Comienza la vibración
-            }
-        } else {
-            Toast.makeText(this, "Este dispositivo no tiene soporte de vibración.", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    // Método para detener la vibración continua
-    private void stopVibrating() {
-        if (handler != null && vibrateRunnable != null) {
-            handler.removeCallbacks(vibrateRunnable); // Detiene la vibración
-        }
-    }
 
     @Override
     public void onClick(View view) {
@@ -131,12 +95,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Intent intent = new Intent(this, FriendListActivity.class);
             startActivity(intent);
         }
+
+        if(view.getId() == R.id.meet_button) {
+            Intent intent = new Intent(this, ChatActivity.class);
+            startActivity(intent);
+        }
     }
 
-    // Asegurarse de detener la vibración cuando la actividad se destruye o se detiene
-    @Override
-    protected void onStop() {
-        super.onStop();
-        stopVibrating(); // Detener vibración si la actividad no está activa
-    }
+
 }

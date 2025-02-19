@@ -3,6 +3,8 @@
 
     <color name="colorAccent">#FF4081</color>
     <color name="scrim_overlay">#80000000</color>
+    <color name="gray">#B0B0B0</color>
+
 
     <color name="transparent_background">#00000000</color>
     <color name="black">#000000</color>
