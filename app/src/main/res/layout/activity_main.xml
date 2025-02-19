@@ -51,12 +51,11 @@
                 android:layout_weight="1"
                 android:layout_margin="16dp"
                 android:focusable="true"
-                android:text="@string/Ajustes"
                 android:textAlignment="center"
                 android:textSize="18sp"
                 android:textColor="@color/md_theme_onBackground"
-                app:icon="@drawable/baseline_settings_24"
-                app:iconSize="50dp"
+                app:icon="@drawable/settings_menu"
+                app:iconSize="100dp"
                 app:iconGravity="top"
                 android:drawablePadding="10dp"
                 android:background="@android:color/transparent"/>
@@ -68,12 +67,11 @@
                 android:layout_weight="1"
                 android:layout_margin="16dp"
                 android:focusable="true"
-                android:text="@string/Amigos"
                 android:textAlignment="center"
                 android:textSize="18sp"
                 android:textColor="@color/md_theme_onBackground"
-                app:icon="@drawable/baseline_person_24"
-                app:iconSize="50dp"
+                app:icon="@drawable/user_friends"
+                app:iconSize="100dp"
                 app:iconGravity="top"
                 android:drawablePadding="10dp"
                 android:background="@android:color/transparent"/>
@@ -91,7 +89,8 @@
             android:textSize="20sp"
             android:layout_gravity="bottom"
             android:layout_marginBottom="24dp"
-            android:backgroundTint="@color/colorAccent"/>
+            android:background="@drawable/rounded_button"
+            android:layout_marginHorizontal="15dp"/>
 
     </LinearLayout>
 

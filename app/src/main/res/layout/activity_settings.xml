@@ -59,6 +59,7 @@
                 android:textAppearance="?attr/textAppearanceTitleMedium"
                 android:textColor="@color/black" />
 
+
             <com.google.android.material.slider.RangeSlider
                 android:id="@+id/sliderAgeRange"
                 android:layout_width="match_parent"
@@ -189,9 +190,7 @@
         android:text="Cerrar sesión"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="8dp"
-        app:cornerRadius="12dp"
-        android:textColor="@android:color/white"
-        app:backgroundTint="@color/colorAccent"/>
+        android:background="@drawable/rounded_button"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnDeleteAccount"
@@ -199,7 +198,9 @@
         android:layout_height="wrap_content"
         android:text="Borrar cuenta"
         android:layout_marginTop="8dp"
-        android:backgroundTint="@android:color/black"
+        android:backgroundTint="@android:color/transparent"
+        app:strokeColor="@color/colorAccent"
+        app:strokeWidth="2dp"
         app:cornerRadius="12dp"
         android:textColor="@android:color/white" />
 </LinearLayout>

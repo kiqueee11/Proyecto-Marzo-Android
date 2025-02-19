@@ -138,12 +138,10 @@ package com.proyectomarzo.flashmeet;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AlertDialog;
@@ -165,7 +163,7 @@ public class ChatActivity extends AppCompatActivity {
     private MessageAdapter messageAdapter;
     private List<Message> messageList;
     private EditText messageInput;
-    private ImageButton sendButton, backButton, settingsButton;
+    private ImageButton sendButton, backButton, addFriendButton, viewProfileButton;
     private ImageView userImage;
     private TextView userName;
     private Random random;
@@ -182,7 +180,8 @@ public class ChatActivity extends AppCompatActivity {
         messageInput = findViewById(R.id.text_input);
         sendButton = findViewById(R.id.send);
         backButton = findViewById(R.id.arrow);
-        settingsButton = findViewById(R.id.settings);
+        addFriendButton = findViewById(R.id.add_friend);
+        viewProfileButton = findViewById(R.id.see_perfil);
         userImage = findViewById(R.id.user_image);
         userName = findViewById(R.id.user_name);
 
@@ -197,10 +196,14 @@ public class ChatActivity extends AppCompatActivity {
         sendButton.setOnClickListener(v -> sendMessage());
         backButton.setOnClickListener(v -> finish()); // Cierra la actividad
 
-        settingsButton.setVisibility(View.GONE); // Ocultar ajustes al inicio
-        settingsButton.setOnClickListener(v -> showSettingsMenu());
+        // Ocultar botones al inicio
+        addFriendButton.setVisibility(View.GONE);
+        viewProfileButton.setVisibility(View.GONE);
 
-        // Iniciar el temporizador de 5 minutos para mostrar el popup
+        addFriendButton.setOnClickListener(v -> confirmAddFriend());
+        viewProfileButton.setOnClickListener(v -> showProfileMessage());
+
+        // Iniciar el temporizador para mostrar el popup
         handler.postDelayed(this::showIdentityPopup, REVEAL_DELAY);
     }
 
@@ -254,7 +257,8 @@ public class ChatActivity extends AppCompatActivity {
     private void revealIdentity() {
         userImage.setVisibility(View.VISIBLE);
         userName.setVisibility(View.VISIBLE);
-        settingsButton.setVisibility(View.VISIBLE); // Mostrar botón de ajustes
+        addFriendButton.setVisibility(View.VISIBLE);
+        viewProfileButton.setVisibility(View.VISIBLE);
 
         userImage.setImageResource(R.drawable.mock_user); // Imagen ficticia
         userName.setText("Usuario Misterioso"); // Nombre ficticio
@@ -265,40 +269,29 @@ public class ChatActivity extends AppCompatActivity {
         messageAdapter.notifyDataSetChanged();
     }
 
-    private void showSettingsMenu() {
-        PopupMenu popupMenu = new PopupMenu(this, settingsButton);
-        popupMenu.getMenuInflater().inflate(R.menu.chat_settings_menu, popupMenu.getMenu());
-
-        popupMenu.setOnMenuItemClickListener(item -> {
-            int id = item.getItemId();
-
-            if (id == R.id.add_friend) {
-                addFriend();
-                return true;
-            } else if (id == R.id.view_profile) {
-                viewProfile();
-                return true;
-            }
-
-            return false;
-        });
-
-        popupMenu.show();
+    private void confirmAddFriend() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("Agregar amigo")
+                .setMessage("¿Deseas agregar a esta persona como amigo?")
+                .setPositiveButton("Sí", (dialog, which) -> showFriendAddedMessage())
+                .setNegativeButton("No", null)
+                .show();
     }
 
-    private void addFriend() {
+    private void showFriendAddedMessage() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Solicitud enviada")
-                .setMessage("Has enviado una solicitud de amistad.")
+        builder.setTitle("Amigo agregado")
+                .setMessage("La persona ha sido agregada a tu lista de amigos.")
                 .setPositiveButton("Aceptar", null)
                 .show();
     }
 
-    private void viewProfile() {
+    private void showProfileMessage() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("Perfil del usuario")
-                .setMessage("Nombre: Usuario Misterioso\nEdad: 25\nUbicación: Desconocida")
-                .setPositiveButton("Cerrar", null)
+                .setMessage("Dirigiendo al perfil...")
+                .setPositiveButton("Aceptar", null)
                 .show();
     }
 }
+
