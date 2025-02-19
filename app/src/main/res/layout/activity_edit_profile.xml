@@ -1,82 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
-android:id="@+id/main"
-android:background="@drawable/background_gradient"
-android:layout_width="match_parent"
-android:layout_height="match_parent"
-android:padding="12dp"
-tools:context=".EditProfileActivity">
-
-<!-- Top Bar -->
-<androidx.appcompat.widget.Toolbar
-    android:id="@+id/toolbar"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize"
-    android:layout_marginBottom="8dp"
-    app:layout_constraintTop_toTopOf="parent">
+    android:layout_height="match_parent"
+    android:padding="12dp"
+    android:background="@drawable/background_gradient"
+    tools:context=".EditProfileActivity">
 
-    <LinearLayout
-        android:id="@+id/titleContainer"
+    <!-- Top Bar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="start|center_vertical">
-
-        <ImageButton
-            android:id="@+id/btnBack"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:background="?attr/selectableItemBackgroundBorderless"
-            android:src="@drawable/ic_arrow_back"
-            android:contentDescription="Volver"
-            android:padding="12dp"/>
-
-        <com.google.android.material.textview.MaterialTextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Perfil"
-            android:textAppearance="?attr/textAppearanceHeadlineMedium"
-            android:textColor="@android:color/white"
-            android:gravity="center"
-            android:layout_marginStart="8dp"/>
-    </LinearLayout>
-</androidx.appcompat.widget.Toolbar>
-
-<!-- Profile Image Background -->
-<ImageView
-    android:id="@+id/img_profile_background"
-    android:layout_width="match_parent"
-    android:layout_height="220dp"
-    android:scaleType="centerCrop"
-    app:cardCornerRadius="16dp"
-    app:layout_constraintTop_toBottomOf="@id/toolbar"
-    android:src="@drawable/perfil" />
-
-<!-- Profile CardView (Fixed) -->
-<androidx.cardview.widget.CardView
-    android:id="@+id/card_profile"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:layout_marginTop="-40dp"
-    app:cardCornerRadius="16dp"
-    android:layout_marginHorizontal="5dp"
-    app:cardElevation="4dp"
-    app:layout_constraintTop_toBottomOf="@id/img_profile_background"
-    android:background="@android:color/white">
-
-    <!-- ScrollView dentro de la CardView -->
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fillViewport="true"
-        android:padding="20dp">
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginBottom="8dp"
+        app:titleTextAppearance="?attr/textAppearanceHeadlineMedium"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
+            android:id="@+id/titleContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            android:gravity="start|center_vertical">
+
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="48dp"
+                android:layout_height="48dp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_arrow_back"
+                android:contentDescription="Volver"
+                android:padding="12dp"/>
+
+            <com.google.android.material.textview.MaterialTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Perfil"
+                android:textSize="20sp"
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                android:layout_marginStart="8dp"/>
+        </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <!-- Profile Image -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_profile_image"
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:layout_marginBottom="8dp"
+        app:cardCornerRadius="16dp"
+        app:cardElevation="4dp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
+
+        <ImageView
+            android:id="@+id/img_profile_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/perfil"
+            android:contentDescription="Imagen de perfil"/>
+    </androidx.cardview.widget.CardView>
+
+    <!-- ScrollView para el contenido -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/card_profile_image"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:cardCornerRadius="16dp"
+            app:cardElevation="4dp"
+            android:background="@android:color/white"
+            android:layout_marginHorizontal="5dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="20dp">
 
                 <RelativeLayout
                     android:layout_width="match_parent"
@@ -96,21 +106,21 @@ tools:context=".EditProfileActivity">
                         android:id="@+id/tv_age"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="26"
-                        android:textColor="@color/black"
                         android:layout_below="@id/tv_name"
                         android:layout_marginTop="4dp"
+                        android:text="26"
+                        android:textColor="@color/black"
                         android:textSize="16sp" />
 
                     <TextView
                         android:id="@+id/tv_gender"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Hombre"
-                        android:layout_marginStart="24dp"
                         android:layout_below="@id/tv_name"
+                        android:layout_marginStart="24dp"
                         android:layout_marginTop="4dp"
                         android:layout_toEndOf="@id/tv_age"
+                        android:text="Hombre"
                         android:textSize="16sp" />
 
                     <ImageButton
@@ -118,11 +128,11 @@ tools:context=".EditProfileActivity">
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
-                        android:src="@drawable/ic_edit"
+                        android:background="@null"
+                        android:contentDescription="Editar perfil"
                         android:padding="8dp"
-                        android:background="@null" />
+                        android:src="@drawable/ic_edit" />
                 </RelativeLayout>
-
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -139,7 +149,6 @@ tools:context=".EditProfileActivity">
                     android:layout_marginBottom="20dp"
                     android:text="Lorem ipsum dolor sit amet..." />
 
-                <!-- Photos -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -150,63 +159,53 @@ tools:context=".EditProfileActivity">
                 <GridLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
                     android:columnCount="3"
-                    android:rowCount="2"
-                    android:layout_marginBottom="20dp">
+                    android:rowCount="2">
 
                     <ImageView
                         android:id="@+id/img_photo1"
-                        android:layout_width="0dp"
+                        android:layout_width="100dp"
                         android:layout_height="100dp"
-                        android:layout_columnWeight="1"
                         android:layout_margin="4dp"
-                        android:background="@drawable/perfil"
-                        android:padding="24dp" />
+                        android:src="@drawable/perfil" />
 
                     <ImageView
                         android:id="@+id/img_photo2"
-                        android:layout_width="0dp"
+                        android:layout_width="100dp"
                         android:layout_height="100dp"
-                        android:layout_columnWeight="1"
                         android:layout_margin="4dp"
-                        android:background="@drawable/photo_placeholder"
-                        android:padding="24dp" />
+                        android:src="@drawable/photo_placeholder" />
 
                     <ImageView
                         android:id="@+id/img_photo3"
-                        android:layout_width="0dp"
+                        android:layout_width="100dp"
                         android:layout_height="100dp"
-                        android:layout_columnWeight="1"
                         android:layout_margin="4dp"
-                        android:background="@drawable/photo_placeholder"
-                        android:padding="24dp" />
+                        android:src="@drawable/photo_placeholder" />
+
                     <ImageView
                         android:id="@+id/img_photo4"
-                        android:layout_width="0dp"
+                        android:layout_width="100dp"
                         android:layout_height="100dp"
-                        android:layout_columnWeight="1"
                         android:layout_margin="4dp"
-                        android:background="@drawable/photo_placeholder"
-                        android:padding="24dp" />
+                        android:src="@drawable/photo_placeholder" />
+
                     <ImageView
                         android:id="@+id/img_photo5"
-                        android:layout_width="0dp"
+                        android:layout_width="100dp"
                         android:layout_height="100dp"
-                        android:layout_columnWeight="1"
                         android:layout_margin="4dp"
-                        android:background="@drawable/photo_placeholder"
-                        android:padding="24dp" />
+                        android:src="@drawable/photo_placeholder" />
+
                     <ImageView
                         android:id="@+id/img_photo6"
-                        android:layout_width="0dp"
+                        android:layout_width="100dp"
                         android:layout_height="100dp"
-                        android:layout_columnWeight="1"
                         android:layout_margin="4dp"
-                        android:background="@drawable/photo_placeholder"
-                        android:padding="24dp" />
+                        android:src="@drawable/photo_placeholder" />
                 </GridLayout>
 
-                <!-- Social Media -->
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -217,57 +216,41 @@ tools:context=".EditProfileActivity">
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:gravity="center"
                     android:layout_marginTop="12dp"
-                    android:layout_marginBottom="8dp">
+                    android:layout_marginBottom="8dp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
 
-                    <RelativeLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="8dp">
+                    <ImageView
+                        android:id="@+id/img_instagram"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_marginEnd="32dp"
+                        android:src="@drawable/ic_instagram" />
 
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:orientation="horizontal"
-                            android:gravity="center"
-                            android:layout_marginTop="12dp">
+                    <ImageView
+                        android:id="@+id/img_facebook"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_marginEnd="32dp"
+                        android:src="@drawable/ic_facebook" />
 
-                            <ImageView
-                                android:id="@+id/img_instagram"
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:src="@drawable/ic_instagram"
-                                android:layout_marginEnd="32dp" />
+                    <ImageView
+                        android:id="@+id/img_twitter"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_marginEnd="32dp"
+                        android:src="@drawable/ic_twitter" />
 
-                            <ImageView
-                                android:id="@+id/img_facebook"
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:src="@drawable/ic_facebook"
-                                android:layout_marginEnd="32dp" />
-
-                            <ImageView
-                                android:id="@+id/img_twitter"
-                                android:layout_width="32dp"
-                                android:layout_height="32dp"
-                                android:src="@drawable/ic_twitter" />
-                        </LinearLayout>
-
-                        <ImageButton
-                            android:id="@+id/btn_edit2"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentEnd="true"
-                            android:layout_centerVertical="true"
-                            android:src="@drawable/ic_edit"
-                            android:padding="8dp"
-                            android:background="@null" />
-
-                    </RelativeLayout>
+                    <ImageButton
+                        android:id="@+id/btn_edit2"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:background="@null"
+                        android:src="@drawable/ic_edit" />
                 </LinearLayout>
             </LinearLayout>
-        </ScrollView>
-    </androidx.cardview.widget.CardView>
+        </androidx.cardview.widget.CardView>
+    </ScrollView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
