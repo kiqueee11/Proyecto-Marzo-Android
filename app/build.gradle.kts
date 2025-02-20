@@ -1,3 +1,6 @@
+import com.android.aaptcompiler.parseScreenWidthDp
+import com.android.tools.analytics.AnalyticsPaths
+
 plugins {
     alias(libs.plugins.android.application)
 }
