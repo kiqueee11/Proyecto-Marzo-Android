@@ -30,6 +30,7 @@
 
         <ImageView
             android:id="@+id/user_image"
+            android:layout_marginEnd="@dimen/_5sdp"
             android:layout_width="@dimen/_30sdp"
             android:layout_height="@dimen/_30sdp"
             android:background="@drawable/background_round"
@@ -61,7 +62,8 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:background="@android:color/transparent"
-            android:src="@drawable/ver_perfil"
+            android:src="@drawable/ver_perfil_disabled"
+            android:clickable="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/add_friend"
@@ -73,7 +75,8 @@
             android:layout_height="match_parent"
             android:layout_marginStart="@dimen/_5sdp"
             android:background="@android:color/transparent"
-            android:src="@drawable/add_amigo"
+            android:src="@drawable/add_amigo_disabled"
+            android:clickable="false"
             app:layout_constraintEnd_toStartOf="@+id/see_perfil"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/user_name"

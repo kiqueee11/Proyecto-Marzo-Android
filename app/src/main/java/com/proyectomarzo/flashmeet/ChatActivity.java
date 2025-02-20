@@ -197,9 +197,10 @@ public class ChatActivity extends AppCompatActivity {
         backButton.setOnClickListener(v -> finish()); // Cierra la actividad
 
         // Ocultar botones al inicio
-        addFriendButton.setVisibility(View.GONE);
-        viewProfileButton.setVisibility(View.GONE);
-
+        /*addFriendButton.setVisibility(View.GONE);
+        viewProfileButton.setVisibility(View.GONE);*/
+        addFriendButton.setEnabled(false);
+        viewProfileButton.setEnabled(false);
         addFriendButton.setOnClickListener(v -> confirmAddFriend());
         viewProfileButton.setOnClickListener(v -> showProfileMessage());
 
@@ -257,9 +258,12 @@ public class ChatActivity extends AppCompatActivity {
     private void revealIdentity() {
         userImage.setVisibility(View.VISIBLE);
         userName.setVisibility(View.VISIBLE);
-        addFriendButton.setVisibility(View.VISIBLE);
-        viewProfileButton.setVisibility(View.VISIBLE);
-
+        /*addFriendButton.setVisibility(View.VISIBLE);
+        viewProfileButton.setVisibility(View.VISIBLE);*/
+        viewProfileButton.setImageResource(R.drawable.add_amigo);
+        addFriendButton.setImageResource(R.drawable.ver_perfil);
+        addFriendButton.setEnabled(true);
+        viewProfileButton.setEnabled(true);
         userImage.setImageResource(R.drawable.mock_user); // Imagen ficticia
         userName.setText("Usuario Misterioso"); // Nombre ficticio
     }
