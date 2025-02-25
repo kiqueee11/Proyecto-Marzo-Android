@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background_gradient"
-    android:padding="24dp"
+    android:padding="@dimen/_24sdp"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -19,62 +19,58 @@
         <!-- Logo Flashmeet -->
         <ImageView
             android:layout_width="wrap_content"
-            android:layout_height="124dp"
+            android:layout_height="@dimen/_124sdp"
             android:src="@drawable/flashmeet_logo"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/_20sdp"
             android:layout_gravity="center"/>
 
         <!-- Imagen de perfil con borde y destello -->
         <ImageView
             android:id="@+id/profile_activity_profile_image"
-            android:layout_width="200dp"
-            android:layout_height="200dp"
+            android:layout_width="@dimen/_150sdp"
+            android:layout_height="@dimen/_150sdp"
             android:layout_gravity="center"
             android:scaleType="centerCrop"
             android:src="@drawable/perfil"
-            android:layout_margin="16dp"
+            android:layout_margin="@dimen/_16sdp"
             android:background="@drawable/border_with_colors"
-            tools:layout_editor_absoluteX="49dp"
-            tools:layout_editor_absoluteY="16dp" />
+            />
         <!-- Botones de Ajustes y Amigos con fondo transparente -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
-            android:layout_marginTop="10dp">
+            android:layout_marginTop="@dimen/_10sdp">
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/settings_button"
                 android:layout_width="0dp"
-                android:layout_height="120dp"
+                android:layout_height="@dimen/_120sdp"
                 android:layout_weight="1"
-                android:layout_margin="16dp"
                 android:focusable="true"
                 android:textAlignment="center"
-                android:textSize="18sp"
+                android:textSize="@dimen/_18sdp"
                 android:textColor="@color/md_theme_onBackground"
                 app:icon="@drawable/settings_menu"
-                app:iconSize="100dp"
+                app:iconSize="@dimen/_100sdp"
                 app:iconGravity="top"
-                android:drawablePadding="10dp"
+                android:drawablePadding="@dimen/_10sdp"
                 android:background="@android:color/transparent"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/friends_button"
                 android:layout_width="0dp"
-                android:layout_height="120dp"
+                android:layout_height="@dimen/_120sdp"
                 android:layout_weight="1"
-                android:layout_margin="16dp"
+                android:background="@android:color/transparent"
+                android:drawablePadding="@dimen/_10sdp"
                 android:focusable="true"
                 android:textAlignment="center"
-                android:textSize="18sp"
                 android:textColor="@color/md_theme_onBackground"
+                android:textSize="@dimen/_18sdp"
                 app:icon="@drawable/user_friends"
-                app:iconSize="100dp"
-                app:iconGravity="top"
-                android:drawablePadding="10dp"
-                android:background="@android:color/transparent"/>
+                app:iconSize="@dimen/_100sdp" />
 
         </LinearLayout>
 
@@ -83,14 +79,14 @@
             android:id="@+id/meet_button"
             style="@style/Widget.Material3.Button.IconButton.Filled"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="40dp"
+            android:layout_height="@dimen/_50sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:text="@string/meet"
-            android:textSize="20sp"
+            android:textSize="@dimen/_20sdp"
             android:layout_gravity="bottom"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="@dimen/_24sdp"
             android:background="@drawable/rounded_button"
-            android:layout_marginHorizontal="15dp"/>
+            android:layout_marginHorizontal="@dimen/_15sdp"/>
 
     </LinearLayout>
 

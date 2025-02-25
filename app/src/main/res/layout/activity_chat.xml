@@ -62,7 +62,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:background="@android:color/transparent"
-            android:src="@drawable/ver_perfil_disabled"
+            android:src="@drawable/blank"
             android:clickable="false"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -75,12 +75,11 @@
             android:layout_height="match_parent"
             android:layout_marginStart="@dimen/_5sdp"
             android:background="@android:color/transparent"
-            android:src="@drawable/add_amigo_disabled"
             android:clickable="false"
+            android:src="@drawable/blank"
             app:layout_constraintEnd_toStartOf="@+id/see_perfil"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/user_name"
-          />
+            app:layout_constraintStart_toEndOf="@+id/user_name" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

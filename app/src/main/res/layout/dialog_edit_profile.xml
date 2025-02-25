@@ -8,31 +8,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="@dimen/_16sdp">
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="@dimen/_16sdp"
             android:hint="Nombre">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/_12sdp"
                 android:inputType="textPersonName" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="@dimen/_16sdp"
             android:hint="Edad">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/et_age"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/_12sdp"
                 android:inputType="number" />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -40,22 +42,22 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Género"
-            android:textSize="16sp"
-            android:layout_marginBottom="8dp" />
+            android:textSize="@dimen/_16sdp"
+            android:layout_marginBottom="@dimen/_8sdp" />
 
         <RadioGroup
             android:id="@+id/rg_gender"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="16dp">
+            android:layout_marginBottom="@dimen/_16sdp">
 
             <RadioButton
                 android:id="@+id/rb_male"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Hombre"
-                android:layout_marginEnd="16dp" />
+                android:layout_marginEnd="@dimen/_16sdp" />
 
             <RadioButton
                 android:id="@+id/rb_female"
@@ -73,6 +75,7 @@
                 android:id="@+id/et_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/_12sdp"
                 android:inputType="textMultiLine"
                 android:minLines="3"
                 android:gravity="top" />
@@ -83,7 +86,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="end"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="@dimen/_4sdp"
             android:text="0/50 palabras" />
 
     </LinearLayout>
