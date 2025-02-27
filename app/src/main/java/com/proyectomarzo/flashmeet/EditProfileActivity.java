@@ -53,7 +53,7 @@ public class EditProfileActivity extends AppCompatActivity {
     private void initViews() {
         btnBack = findViewById(R.id.btnBack);
         btnEdit = findViewById(R.id.btn_edit);
-        btnEdit2 = findViewById(R.id.btn_edit2); // Button to edit social media links
+        btnEdit2 = findViewById(R.id.btn_edit2);
         tvName = findViewById(R.id.tv_name);
         tvAge = findViewById(R.id.tv_age);
         tvGender = findViewById(R.id.tv_gender);

@@ -48,11 +48,11 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
 
-    // Retrofit para comunicación con API
+
     implementation (libs.retrofit)
     implementation (libs.converter.gson)
 
-    // OkHttp para interceptores y logging
+
     implementation (libs.okhttp)
     implementation (libs.logging.interceptor)
 }

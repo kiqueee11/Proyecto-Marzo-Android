@@ -26,10 +26,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     ImageView profileImage;
     Button settingsButton;
     Button friendsButton;
-    MaterialButton meetButton;  // Botón "Meet"
+    MaterialButton meetButton;
     ActivityMainBinding binding;
 
-    // Handler y Runnable para vibración continua
     private Handler handler = new Handler();
     private Runnable vibrateRunnable;
 
@@ -40,42 +39,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
 
-        // Configuración de márgenes del sistema
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        // Referencias de los botones
         settingsButton = findViewById(R.id.settings_button);
         friendsButton = findViewById(R.id.friends_button);
-        meetButton = findViewById(R.id.meet_button);  // Referencia al botón "Meet"
+        meetButton = findViewById(R.id.meet_button);
 
         settingsButton.setOnClickListener(this);
         friendsButton.setOnClickListener(this);
         meetButton.setOnClickListener(this);
 
-        // Configuración de la imagen de perfil con borde y destello
         profileImage = findViewById(R.id.profile_activity_profile_image);
         profileImage.setClipToOutline(true);
         profileImage.setOutlineProvider(new ViewOutlineProvider() {
 
             @Override
             public void getOutline(View view, Outline outline) {
-                // Define un contorno circular con el radio basado en el tamaño de la imagen
                 int diameter = Math.min(view.getWidth(), view.getHeight());
                 outline.setOval(0, 0, diameter, diameter); // Establecer forma circular
             }
         });
 
-        // Configurar los botones con fondo transparente
         settingsButton.setBackgroundColor(getResources().getColor(android.R.color.transparent));
         friendsButton.setBackgroundColor(getResources().getColor(android.R.color.transparent));
 
 
 
-        // Configurar la acción al presionar la imagen de perfil
         profileImage.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, EditProfileActivity.class);
             startActivity(intent);

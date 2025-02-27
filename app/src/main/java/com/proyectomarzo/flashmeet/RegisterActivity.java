@@ -23,9 +23,8 @@ public class RegisterActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_register); // Asegúrate de tener este layout
+        setContentView(R.layout.activity_register);
 
-        // Vincular elementos del layout
         etName = findViewById(R.id.etName);
         etEmail = findViewById(R.id.etEmail);
         etPassword = findViewById(R.id.etPassword);
@@ -34,10 +33,8 @@ public class RegisterActivity extends AppCompatActivity {
         tvBackToLogin = findViewById(R.id.tvBackToLogin);
         progressBar = findViewById(R.id.progressBar);
 
-        // Botón de registro
         btnRegister.setOnClickListener(v -> registerUser());
 
-        // Redirección a Login
         tvBackToLogin.setOnClickListener(v -> {
             startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
             finish();
@@ -50,7 +47,6 @@ public class RegisterActivity extends AppCompatActivity {
         String password = etPassword.getText().toString().trim();
         String confirmPassword = etConfirmPassword.getText().toString().trim();
 
-        // Validaciones de campos
         if (TextUtils.isEmpty(name)) {
             etName.setError("El nombre es obligatorio");
             return;
@@ -72,24 +68,20 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        // Mostrar ProgressBar
         progressBar.setVisibility(View.VISIBLE);
 
-        // Simulación de registro (Mock)
-        // Guardamos los datos en SharedPreferences como si fuera un registro exitoso
         SharedPreferences prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("name", name);
         editor.putString("email", email);
-        editor.putString("password", password); // No guardes contraseñas reales en un entorno real
+        editor.putString("password", password);
         editor.apply();
 
-        // Simular un pequeño retraso
+
         new android.os.Handler().postDelayed(() -> {
             progressBar.setVisibility(View.GONE);
             Toast.makeText(RegisterActivity.this, "Registro exitoso", Toast.LENGTH_SHORT).show();
 
-            // Redirigir a LoginActivity
             startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
             finish();
         }, 1500); // Retraso de 1.5 segundos

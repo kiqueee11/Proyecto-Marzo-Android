@@ -20,20 +20,17 @@ public class SplashScreen extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash_screen);
 
-        // Animación para el logo
         ImageView splashLogo = findViewById(R.id.splashLogo);
         Animation fadeIn = AnimationUtils.loadAnimation(this, R.anim.fade_in);
         splashLogo.startAnimation(fadeIn);
 
-        // Carga de imagen de fondo con Glide
         ImageView glideBackground = findViewById(R.id.splashGlideBackground);
         Glide.with(this)
-                .load(R.drawable.gradient) // Asegúrate de tener una imagen en drawable
+                .load(R.drawable.gradient)
                 .transition(DrawableTransitionOptions.withCrossFade(1000))
                 .centerCrop()
                 .into(glideBackground);
 
-        // Llamamos a launchMain después de 3 segundos
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             startActivity(new Intent(SplashScreen.this, LoginActivity.class));
             finish(); // Cierra SplashScreen
