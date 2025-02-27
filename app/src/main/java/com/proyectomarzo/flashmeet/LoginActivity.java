@@ -1,43 +1,41 @@
 package com.proyectomarzo.flashmeet;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
+import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
-    Button btn_login;
-    Button btn_register;
+import com.proyectomarzo.flashmeet.databinding.ActivityLoginBinding;
+
+public class LoginActivity extends AppCompatActivity {
+
+    private ActivityLoginBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_login);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
+        binding = ActivityLoginBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+
+
+        binding.btnLogin.setOnClickListener(v -> {
+            navigateToChatActivity();
         });
 
-        btn_login=(Button)findViewById(R.id.btn_login);
-        btn_login.setOnClickListener(this);
+        binding.tvRegister.setOnClickListener(v -> {
+            Intent intent = new Intent(LoginActivity.this, RegisterActivity.class);
+            startActivity(intent);
+        });
     }
 
-    @Override
-    public void onClick(View v) {
-
-        if(v.getId()==R.id.btn_login){
-            Intent intent=new Intent(this, MainActivity.class);
-            startActivity(intent);
-        }
-
-
+    private void navigateToChatActivity() {
+        Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        startActivity(intent);
+        finish();
     }
 }
