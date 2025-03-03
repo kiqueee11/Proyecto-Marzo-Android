@@ -7,7 +7,7 @@
     android:id="@+id/main"
     android:background="@drawable/background_gradient"
     android:orientation="vertical"
-    android:padding="16dp"
+    android:padding="@dimen/_16sdp"
     android:gravity="top|center_horizontal"
     tools:context=".SettingsActivity">
 
@@ -16,16 +16,16 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="start|center_vertical"
-        android:layout_marginBottom="24dp">
+        android:layout_marginBottom="@dimen/_24sdp">
 
         <ImageButton
             android:id="@+id/btnBack"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="@dimen/_48sdp"
+            android:layout_height="@dimen/_48sdp"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/ic_arrow_back"
             android:contentDescription="Volver"
-            android:layout_marginStart="8dp"/>
+            android:layout_marginStart="@dimen/_8sdp"/>
 
         <com.google.android.material.textview.MaterialTextView
             android:layout_width="wrap_content"
@@ -34,21 +34,21 @@
             android:textAppearance="?attr/textAppearanceHeadlineMedium"
             android:textColor="@android:color/white"
             android:gravity="center"
-            android:layout_marginStart="16dp"/>
+            android:layout_marginStart="@dimen/_16sdp"/>
     </LinearLayout>
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="@dimen/_20sdp"
         app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="12dp"
-        app:cardElevation="4dp">
+        app:cardCornerRadius="@dimen/_12sdp"
+        app:cardElevation="@dimen/_4sdp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="12dp"
+            android:padding="@dimen/_12sdp"
             android:orientation="vertical"
             android:gravity="center_vertical">
 
@@ -66,22 +66,22 @@
                 android:layout_height="wrap_content"
                 android:valueFrom="18"
                 android:valueTo="60"
-                android:layout_marginTop="8dp"/>
+                android:layout_marginTop="@dimen/_8sdp"/>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="@dimen/_20sdp"
         app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="12dp"
-        app:cardElevation="4dp">
+        app:cardCornerRadius="@dimen/_12sdp"
+        app:cardElevation="@dimen/_4sdp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="12dp"
+            android:padding="@dimen/_12sdp"
             android:orientation="vertical"
             android:gravity="center_vertical">
 
@@ -99,22 +99,22 @@
                 android:valueFrom="1"
                 android:valueTo="100"
                 android:value="20"
-                android:layout_marginTop="8dp"/>
+                android:layout_marginTop="@dimen/_8sdp"/>
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="@dimen/_20sdp"
         app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="12dp"
-        app:cardElevation="4dp">
+        app:cardCornerRadius="@dimen/_12sdp"
+        app:cardElevation="@dimen/_4sdp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="12dp"
+            android:padding="@dimen/_12sdp"
             android:orientation="vertical"
             android:gravity="center_vertical">
 
@@ -127,10 +127,10 @@
 
             <com.google.android.material.button.MaterialButtonToggleGroup
                 android:id="@+id/togglePreferences"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:singleSelection="true"
-                android:layout_marginTop="8dp">
+                android:layout_marginTop="@dimen/_8sdp">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btnMale"
@@ -156,15 +156,15 @@
     <com.google.android.material.card.MaterialCardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="@dimen/_20sdp"
         app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="12dp"
-        app:cardElevation="4dp">
+        app:cardCornerRadius="@dimen/_12sdp"
+        app:cardElevation="@dimen/_4sdp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="12dp"
+            android:padding="@dimen/_12sdp"
             android:orientation="horizontal"
             android:gravity="center_vertical">
 
@@ -188,8 +188,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Cerrar sesión"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="@dimen/_16sdp"
+        android:layout_marginBottom="@dimen/_8sdp"
         android:background="@drawable/rounded_button"/>
 
     <com.google.android.material.button.MaterialButton
@@ -197,10 +197,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Borrar cuenta"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/_8sdp"
         android:backgroundTint="@android:color/transparent"
         app:strokeColor="@color/colorAccent"
-        app:strokeWidth="2dp"
-        app:cornerRadius="12dp"
+        app:strokeWidth="@dimen/_2sdp"
+        app:cornerRadius="@dimen/_12sdp"
         android:textColor="@android:color/white" />
 </LinearLayout>
