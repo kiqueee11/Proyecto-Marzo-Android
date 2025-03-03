@@ -33,7 +33,7 @@ public class SplashScreen extends AppCompatActivity {
 
         new Handler(Looper.getMainLooper()).postDelayed(() -> {
             startActivity(new Intent(SplashScreen.this, LoginActivity.class));
-            finish(); // Cierra SplashScreen
+            finish();
         }, 3000);
     }
 }
