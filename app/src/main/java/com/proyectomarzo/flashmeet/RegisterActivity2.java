@@ -46,7 +46,7 @@ public class RegisterActivity2 extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register2);
 
-        sharedPreferences = getSharedPreferences("UserImages", Context.MODE_PRIVATE);
+        sharedPreferences = getSharedPreferences("UserPreferences", Context.MODE_PRIVATE);
 
         btnImages = findViewById(R.id.btnImages);
         gridLayout = findViewById(R.id.grid);

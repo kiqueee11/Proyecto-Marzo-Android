@@ -119,7 +119,7 @@
         app:cardBackgroundColor="@color/white"
         app:cardCornerRadius="@dimen/_12sdp"
         app:cardElevation="@dimen/_4sdp"
-        app:layout_constraintBottom_toTopOf="@+id/btnLogin"
+        android:layout_marginTop="@dimen/_15sdp"
         app:layout_constraintTop_toBottomOf="@+id/tilEmail"
         tools:layout_editor_absoluteX="31dp">
 
@@ -164,6 +164,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:text="Obtener ubicación"
+                android:onClick="onRequestLocationButtonClick"
                 android:textColor="@color/white" />
 
             <TextView
@@ -195,7 +196,7 @@
     </com.google.android.material.card.MaterialCardView>
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/btnLogin"
+        android:id="@+id/btnRegister"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/rounded_button"

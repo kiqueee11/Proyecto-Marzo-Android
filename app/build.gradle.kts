@@ -40,6 +40,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.gms.play.services.location)
     implementation (libs.material.v140)
     implementation(libs.glide.v4132)
     implementation(libs.appcompat)
