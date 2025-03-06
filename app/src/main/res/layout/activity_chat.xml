@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/ChatLayout"
@@ -7,100 +8,149 @@
     android:layout_height="match_parent"
     android:background="@drawable/background_gradient"
     tools:context=".ChatActivity">
-<androidx.constraintlayout.widget.ConstraintLayout
-    android:id="@+id/user_linear"
-    android:layout_width="match_parent"
-    android:layout_height="100dp"
-    android:orientation="horizontal"
-    app:layout_constraintTop_toTopOf="parent"
-    >
-        <ImageButton
-            android:id="@+id/arrow"
-            android:layout_width="75dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/ic_arrow_back"
-            android:background="transparent"
-            app:layout_constraintStart_toStartOf="parent"
 
-
-            />
-        <ImageView
-            android:id="@+id/user_image"
-            android:layout_width="75dp"
-            android:layout_height="match_parent"
-            android:layout_margin="15dp"
-            android:scaleType="centerCrop"
-            android:src="@drawable/denzel"
-            android:background="@drawable/background_round"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toEndOf="@id/arrow"
-
-            android:clipToOutline="true"
-            />
-        <TextView
-            android:id="@+id/user_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toEndOf="@id/user_image"
-            android:layout_marginStart="15dp"
-            android:textColor="@color/white"
-            android:textSize="30dp"
-            android:text="Username"
-            />
-        <ImageButton
-            android:layout_width="75dp"
-            android:layout_height="match_parent"
-            android:src="@drawable/baseline_settings_24"
-            android:layout_margin="15dp"
-            android:background="@android:color/transparent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            />
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
+    <!-- Barra superior con usuario y ajustes -->
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/user_linear"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@id/glH2"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageButton
+            android:id="@+id/arrow"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_arrow_back"
+            app:layout_constraintEnd_toStartOf="@+id/user_image"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            />
+
+        <ImageView
+            android:id="@+id/user_image"
+            android:layout_marginEnd="@dimen/_5sdp"
+            android:layout_width="@dimen/_30sdp"
+            android:layout_height="@dimen/_30sdp"
+            android:background="@drawable/background_round"
+            android:scaleType="centerCrop"
+            android:src="@drawable/flashmeet_logo"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/user_name"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/arrow"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/user_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+
+            android:text="Username"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_11sdp"
+            app:layout_constraintBottom_toBottomOf="@id/user_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/add_friend"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/user_image"
+            app:layout_constraintTop_toTopOf="@id/user_image" />
+
+        <ImageButton
+            android:id="@+id/see_perfil"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:background="@android:color/transparent"
+            android:src="@drawable/blank"
+            android:clickable="false"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/add_friend"
+           />
+
+        <ImageButton
+            android:id="@+id/add_friend"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/_5sdp"
+            android:background="@android:color/transparent"
+            android:clickable="false"
+            android:src="@drawable/blank"
+            app:layout_constraintEnd_toStartOf="@+id/see_perfil"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/user_name" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <!-- RecyclerView para los mensajes -->
+    <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
-        app:layout_constraintBottom_toTopOf="@+id/send_linear"
-        app:layout_constraintTop_toBottomOf="@+id/user_linear"
-        />
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:padding="10dp"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout2"
+        app:layout_constraintTop_toBottomOf="@id/user_linear" />
+
+    <!-- Barra inferior de envío de mensaje -->
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/send_linear"
+        android:id="@+id/constraintLayout2"
         android:layout_width="match_parent"
-        android:layout_height="75dp"
-        android:orientation="horizontal"
-        android:layout_marginBottom="15dp"
+        android:layout_height="wrap_content"
+        android:padding="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        >
-        <TextView
+        app:layout_constraintTop_toTopOf="@id/glH1">
+        <androidx.constraintlayout.widget.Guideline
+            android:id="@+id/glV1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintGuide_percent="0.8"
+            />
+
+        <EditText
             android:id="@+id/text_input"
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_marginStart="20dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/send"
-            app:layout_constraintTop_toTopOf="parent"
+            android:layout_height="match_parent"
+            android:layout_margin="10dp"
+            android:background="@drawable/edittext_background"
+            android:hint="Escribe un mensaje..."
+            android:textColor="@color/black"
+            android:textSize="16sp"
             app:layout_constraintBottom_toBottomOf="parent"
-            android:background="@color/white"
+            app:layout_constraintEnd_toStartOf="@+id/glV1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-            />
         <ImageButton
             android:id="@+id/send"
-            android:layout_width="100dp"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-
-            app:layout_constraintEnd_toEndOf="parent"
             android:background="@android:color/transparent"
             android:src="@drawable/baseline_play_arrow_24"
-            />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/text_input"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glH1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.9"
+        />
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/glH2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.1"
+        />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

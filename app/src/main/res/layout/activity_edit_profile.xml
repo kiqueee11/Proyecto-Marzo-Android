@@ -1,201 +1,256 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="12dp"
     android:background="@drawable/background_gradient"
-    android:orientation="vertical"
-    android:padding="24dp"
     tools:context=".EditProfileActivity">
 
-    <!-- Botón de retroceso -->
-    <ImageButton
-        android:id="@+id/btnBack"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
-        android:background="?attr/selectableItemBackgroundBorderless"
-        android:src="@drawable/ic_arrow_back"
-        android:contentDescription="Volver"/>
-<!--        android:tint="@android:color/white" -->
-
-
-    <!-- Título -->
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Editar perfil"
-        android:textAppearance="?attr/textAppearanceHeadlineMedium"
-        android:textColor="@android:color/white"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="16dp" />
-
-    <!-- Sección de Fotos -->
-    <LinearLayout
+    <!-- Top Bar -->
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        android:layout_marginBottom="16dp">
-
-        <!-- Galería de fotos -->
-        <GridLayout
-            android:id="@+id/gridGallery"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:columnCount="3"
-            android:rowCount="2"
-            android:layout_marginTop="16dp"
-            android:layout_gravity="center"
-            >
-
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/ic_camera"
-                android:layout_margin="4dp" />
-
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/ic_camera"
-                android:layout_margin="4dp" />
-
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/ic_camera"
-                android:layout_margin="4dp" />
-
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/ic_camera"
-                android:layout_margin="4dp" />
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/ic_camera"
-                android:layout_margin="4dp" />
-
-            <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@drawable/ic_camera"
-                android:layout_margin="4dp" />
-        </GridLayout>
-    </LinearLayout>
-
-    <!-- Card: Datos Personales -->
-    <com.google.android.material.card.MaterialCardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        app:cardBackgroundColor="@color/white"
-        app:cardCornerRadius="12dp">
+        android:layout_height="?attr/actionBarSize"
+        android:layout_marginBottom="8dp"
+        app:titleTextAppearance="?attr/textAppearanceHeadlineMedium"
+        app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
+            android:id="@+id/titleContainer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="16dp"
-            android:orientation="vertical">
+            android:orientation="horizontal"
+            android:gravity="start|center_vertical">
+
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="@dimen/_40sdp"
+                android:layout_height="@dimen/_40sdp"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:src="@drawable/ic_arrow_back"
+                android:contentDescription="Volver"
+                android:padding="12dp"/>
 
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Datos personales"
-                android:textAppearance="?attr/textAppearanceTitleMedium"
-                android:textColor="@color/black"
-                android:layout_marginBottom="8dp" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nombre: Enrique Martín"
-                android:textAppearance="?attr/textAppearanceBodyLarge"
-                android:textColor="@color/black" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Edad: 26"
-                android:textAppearance="?attr/textAppearanceBodyLarge"
-                android:textColor="@color/black" />
-
-            <com.google.android.material.textview.MaterialTextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sexo: Masculino"
-                android:textAppearance="?attr/textAppearanceBodyLarge"
-                android:textColor="@color/black" />
+                android:text="Perfil"
+                android:textSize="@dimen/_20sdp"
+                android:textColor="@android:color/white"
+                android:gravity="center"
+                android:layout_marginStart="@dimen/_8sdp"/>
         </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
+    </androidx.appcompat.widget.Toolbar>
 
-    <!-- Descripción -->
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Descripción"
-        android:textAppearance="?attr/textAppearanceTitleMedium"
-        android:textColor="@android:color/white"
-        android:layout_marginBottom="8dp" />
-
-    <com.google.android.material.textfield.TextInputLayout
+    <!-- Profile Image -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/card_profile_image"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="@dimen/_200sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        app:cardCornerRadius="@dimen/_16sdp"
+        app:cardElevation="@dimen/_4sdp"
+        app:layout_constraintTop_toBottomOf="@id/toolbar">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etDescription"
+        <ImageView
+            android:id="@+id/img_profile_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/perfil"
+            android:contentDescription="Imagen de perfil"/>
+    </androidx.cardview.widget.CardView>
+
+    <!-- ScrollView para el contenido -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toBottomOf="@id/card_profile_image"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Escribe una breve descripción"
-            android:inputType="textMultiLine" />
-    </com.google.android.material.textfield.TextInputLayout>
+            app:cardCornerRadius="@dimen/_16sdp"
+            app:cardElevation="@dimen/_4sdp"
+            android:background="@android:color/white"
+            android:layout_marginHorizontal="@dimen/_5sdp">
 
-    <!-- Redes Sociales -->
-    <com.google.android.material.textview.MaterialTextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Redes Sociales"
-        android:textAppearance="?attr/textAppearanceTitleMedium"
-        android:textColor="@android:color/white"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="8dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/_15sdp">
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_16sdp">
 
-        <ImageButton
-            android:id="@+id/btnFacebook"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:background="?attr/selectableItemBackgroundBorderless"/>
-<!--            android:src="@drawable/ic_facebook"-->
-<!--            android:contentDescription="Facebook"-->
-<!--            android:tint="@android:color/white" -->
+                    <TextView
+                        android:id="@+id/tv_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Enrique Martin"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_20sdp"
+                        android:textStyle="bold" />
 
+                    <TextView
+                        android:id="@+id/tv_age"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_name"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:text="26"
+                        android:textColor="@color/black"
+                        android:textSize="@dimen/_16sdp" />
 
-        <ImageButton
-            android:id="@+id/btnTwitter"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:background="?attr/selectableItemBackgroundBorderless"/>
-<!--            android:src="@drawable/ic_twitter"-->
-<!--            android:contentDescription="Twitter"-->
-<!--            android:tint="@android:color/white" -->
+                    <TextView
+                        android:id="@+id/tv_gender"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/tv_name"
+                        android:layout_marginStart="@dimen/_24sdp"
+                        android:layout_marginTop="@dimen/_4sdp"
+                        android:layout_toEndOf="@id/tv_age"
+                        android:text="Hombre"
+                        android:textSize="@dimen/_16sdp" />
 
+                    <ImageButton
+                        android:id="@+id/btn_edit"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:background="@null"
+                        android:contentDescription="Editar perfil"
+                        android:padding="@dimen/_8sdp"
+                        android:src="@drawable/ic_edit" />
+                </RelativeLayout>
 
-        <ImageButton
-            android:id="@+id/btnInstagram"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            android:background="?attr/selectableItemBackgroundBorderless"/>
-<!--            android:src="@drawable/ic_instagram"-->
-<!--            android:contentDescription="Instagram"-->
-<!--            android:tint="@android:color/white" -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Descripción"
+                    android:textSize="@dimen/_18sdp"
+                    android:textStyle="bold" />
 
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/tv_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginBottom="@dimen/_20sdp"
+                    android:text="Lorem ipsum dolor sit amet..." />
 
-</LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Fotos"
+                    android:textSize="@dimen/_18sdp"
+                    android:textStyle="bold" />
+
+                <GridLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/_20sdp"
+                    android:columnCount="3"
+                    android:rowCount="2">
+
+                    <ImageView
+                        android:id="@+id/img_photo1"
+                        android:layout_width="@dimen/_80sdp"
+                        android:layout_height="@dimen/_80sdp"
+                        android:layout_margin="@dimen/_2sdp"
+                        android:src="@drawable/perfil" />
+
+                    <ImageView
+                        android:id="@+id/img_photo2"
+                        android:layout_width="@dimen/_80sdp"
+                        android:layout_height="@dimen/_80sdp"
+                        android:layout_margin="@dimen/_2sdp"
+                        android:src="@drawable/photo_placeholder" />
+
+                    <ImageView
+                        android:id="@+id/img_photo3"
+                        android:layout_width="@dimen/_80sdp"
+                        android:layout_height="@dimen/_80sdp"
+                        android:layout_margin="@dimen/_2sdp"
+                        android:src="@drawable/photo_placeholder" />
+
+                    <ImageView
+                        android:id="@+id/img_photo4"
+                        android:layout_width="@dimen/_80sdp"
+                        android:layout_height="@dimen/_80sdp"
+                        android:layout_margin="@dimen/_2sdp"
+                        android:src="@drawable/photo_placeholder" />
+
+                    <ImageView
+                        android:id="@+id/img_photo5"
+                        android:layout_width="@dimen/_80sdp"
+                        android:layout_height="@dimen/_80sdp"
+                        android:layout_margin="@dimen/_2sdp"
+                        android:src="@drawable/photo_placeholder" />
+
+                    <ImageView
+                        android:id="@+id/img_photo6"
+                        android:layout_width="@dimen/_80sdp"
+                        android:layout_height="@dimen/_80sdp"
+                        android:layout_margin="@dimen/_2sdp"
+                        android:src="@drawable/photo_placeholder" />
+                </GridLayout>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Redes Sociales"
+                    android:textSize="@dimen/_18sdp"
+                    android:textStyle="bold" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_122sdp"
+                    android:layout_marginBottom="@dimen/_8sdp"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/img_instagram"
+                        android:layout_width="@dimen/_32sdp"
+                        android:layout_height="@dimen/_32sdp"
+                        android:layout_marginEnd="@dimen/_32sdp"
+                        android:src="@drawable/ic_instagram" />
+
+                    <ImageView
+                        android:id="@+id/img_facebook"
+                        android:layout_width="@dimen/_32sdp"
+                        android:layout_height="@dimen/_32sdp"
+                        android:layout_marginEnd="@dimen/_32sdp"
+                        android:src="@drawable/ic_facebook" />
+
+                    <ImageView
+                        android:id="@+id/img_twitter"
+                        android:layout_width="@dimen/_32sdp"
+                        android:layout_height="@dimen/_32sdp"
+                        android:layout_marginEnd="@dimen/_32sdp"
+                        android:src="@drawable/ic_twitter" />
+
+                    <ImageButton
+                        android:id="@+id/btn_edit2"
+                        android:layout_width="@dimen/_32sdp"
+                        android:layout_height="@dimen/_32sdp"
+                        android:background="@null"
+                        android:src="@drawable/ic_edit" />
+                </LinearLayout>
+            </LinearLayout>
+        </androidx.cardview.widget.CardView>
+    </ScrollView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

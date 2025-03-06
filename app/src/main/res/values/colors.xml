@@ -1,9 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
+    <color name="colorAccent">#FF4081</color>
+    <color name="scrim_overlay">#80000000</color>
+    <color name="gray">#B0B0B0</color>
+
+
+    <color name="transparent_background">#00000000</color>
     <color name="black">#000000</color>
     <color name="white">#FFFFFF</color>
 
-    <color name="md_theme_primary">#6730D2</color>  <color name="md_theme_onPrimary">#FFFFFF</color>
+    <color name="md_theme_primary">#000000</color>  <color name="md_theme_onPrimary">#FFFFFF</color>
     <color name="md_theme_primaryContainer">#D1BCFF</color>
     <color name="md_theme_onPrimaryContainer">#3700B3</color>
     <color name="md_theme_inversePrimary">#9A50E5</color>

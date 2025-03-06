@@ -1,3 +1,6 @@
+import com.android.aaptcompiler.parseScreenWidthDp
+import com.android.tools.analytics.AnalyticsPaths
+
 plugins {
     alias(libs.plugins.android.application)
 }
@@ -6,9 +9,6 @@ android {
     namespace = "com.proyectomarzo.flashmeet"
     compileSdk = 35
 
-    buildFeatures {
-        viewBinding = true
-    }
 
     defaultConfig {
         applicationId = "com.proyectomarzo.flashmeet"
@@ -33,18 +33,30 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+    buildFeatures {
+        viewBinding = true
+        dataBinding = true
+    }
 }
 
 dependencies {
-
-    implementation("com.github.bumptech.glide:glide:4.16.0") // o la versión más reciente de Glide
-    annotationProcessor("com.github.bumptech.glide:compiler:4.16.0") // o la versión más reciente de Glide
-
+    implementation (libs.material.v140)
+    implementation(libs.glide.v4132)
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    implementation(libs.datastore.core.android)
+    implementation(libs.play.services.location)
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
+
+    implementation (libs.retrofit)
+    implementation (libs.converter.gson)
+
+
+    implementation (libs.okhttp)
+    implementation (libs.logging.interceptor)
 }

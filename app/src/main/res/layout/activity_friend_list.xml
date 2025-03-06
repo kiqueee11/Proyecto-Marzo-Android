@@ -6,14 +6,43 @@
     android:background="@drawable/background_gradient"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:padding="@dimen/_24sdp"
     tools:context=".FriendListActivity">
+
+    <!-- Contenedor para botón de retroceso y título "Amigos" -->
+    <LinearLayout
+        android:id="@+id/titleContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="start|center_vertical"
+        android:layout_marginBottom="@dimen/_32sdp">
+
+        <!-- Botón de retroceso -->
+        <ImageButton
+            android:id="@+id/btnBack"
+            android:layout_width="@dimen/_48sdp"
+            android:layout_height="@dimen/_48sdp"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@drawable/ic_arrow_back"
+            android:contentDescription="Volver"/>
+
+        <!-- Título Amigos -->
+        <com.google.android.material.textview.MaterialTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Amigos"
+            android:textAppearance="?attr/textAppearanceHeadlineMedium"
+            android:textColor="@android:color/white"
+            android:gravity="center"
+            android:layout_marginStart="@dimen/_16sdp"/>
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/friend_list_recycler_view"
-        android:background="@drawable/background_gradient"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
-    </androidx.recyclerview.widget.RecyclerView>
-
+        android:layout_height="0dp"
+        android:background="@drawable/background_gradient"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/titleContainer" />
 </androidx.constraintlayout.widget.ConstraintLayout>
