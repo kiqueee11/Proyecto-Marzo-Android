@@ -13,6 +13,7 @@ materialVersion = "1.4.0"
 okhttp = "4.12.0"
 retrofit = "2.11.0"
 datastoreCoreAndroid = "1.1.2"
+playServicesLocation = "21.3.0"
 
 [libraries]
 compiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
@@ -31,6 +32,7 @@ material-v140 = { module = "com.google.android.material:material", version.ref =
 okhttp = { module = "com.squareup.okhttp3:okhttp", version.ref = "okhttp" }
 retrofit = { module = "com.squareup.retrofit2:retrofit", version.ref = "retrofit" }
 datastore-core-android = { group = "androidx.datastore", name = "datastore-core-android", version.ref = "datastoreCoreAndroid" }
+play-services-location = { group = "com.google.android.gms", name = "play-services-location", version.ref = "playServicesLocation" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

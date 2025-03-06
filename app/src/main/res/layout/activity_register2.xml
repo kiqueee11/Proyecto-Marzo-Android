@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/registerActivity2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="@dimen/_24sdp"
     android:background="@drawable/background_gradient"
-    tools:context=".RegisterActivity">
+    tools:context=".RegisterActivity2">
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btnImages"
@@ -86,7 +86,7 @@
         app:cardBackgroundColor="@android:color/black"
         app:cardCornerRadius="20dp"
         app:cardElevation="4dp"
-        app:layout_constraintBottom_toBottomOf="@+id/textStep"
+        app:layout_constraintBottom_toBottomOf="@+id/textInfo"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/textInfo">
@@ -112,7 +112,7 @@
         android:layout_height="wrap_content"
         android:elevation="@dimen/_15sdp"
         android:padding="@dimen/_15sdp"
-        android:text="Paso 2/6"
+        android:text="Paso 2/3"
         android:textColor="@color/white"
         android:textSize="@dimen/_15sdp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -125,7 +125,7 @@
         android:layout_height="wrap_content"
         android:elevation="@dimen/_15sdp"
         android:padding="@dimen/_15sdp"
-        android:text="Sube entre una y 6 imágenes"
+        android:text="Sube entre 1 y 6 imágenes"
         android:textColor="@color/white"
         android:textSize="@dimen/_15sdp"
         app:layout_constraintEnd_toEndOf="parent"
