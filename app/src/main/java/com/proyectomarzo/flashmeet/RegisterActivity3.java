@@ -182,16 +182,12 @@ public class RegisterActivity3 extends AppCompatActivity {
                     latitude = location.getLatitude();
                     longitude = location.getLongitude();
                     System.out.println("Latitud: " + latitude + ", Longitud: " + longitude);
-
-
                     SharedPreferences sharedPreferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString("latitude", String.valueOf(latitude));
-                    editor.putString("longitude", String.valueOf(longitude));
                     DecimalFormat decimalFormat = new DecimalFormat("#.#");
-                    latitude = Double.parseDouble(decimalFormat.format(latitude));
-                    longitude = Double.parseDouble(decimalFormat.format(longitude));
-                    ubicacion = latitude+","+longitude;
+                    String formattedLatitude = decimalFormat.format(latitude);
+                    String formattedLongitude = decimalFormat.format(longitude);
+                    ubicacion = formattedLatitude+","+formattedLongitude;
                     editor.putString("posicion",ubicacion);
                     editor.apply();
 
