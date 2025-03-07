@@ -39,6 +39,8 @@ import java.util.Calendar;
 import java.util.Locale;
 
 import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RegisterActivity3 extends AppCompatActivity {
 
@@ -160,6 +162,31 @@ public class RegisterActivity3 extends AppCompatActivity {
                 RegisterRequest registerRequest = new RegisterRequest(name, password, email, imagePath1, imagePath2,imagePath3,imagePath4,imagePath5,imagePath6,sexo,posicion,fechaNacimiento,descripcion,distancia);
                 ApiService apiService = ApiClient.getClient().create(ApiService.class);
                 Call<RegisterResponse> call = apiService.registerUser(registerRequest);
+
+
+                call.enqueue(new Callback<RegisterResponse>() {
+                    @Override
+                    public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
+                        if (response.isSuccessful()) {
+                            // Si la respuesta es exitosa
+                            RegisterResponse responseModel = response.body();  // Aquí obtenemos la respuesta deserializada
+                            String status = responseModel.getStatus();  // "success"
+                            String message = responseModel.getMessage();  // "Datos recibidos correctamente"
+
+                            // Hacer algo con esos datos
+                            Toast.makeText(RegisterActivity3.this, "Respuesta: " + message, Toast.LENGTH_SHORT).show();
+                        } else {
+                            // Si la respuesta no fue exitosa
+                            Toast.makeText(RegisterActivity3.this, "Error al enviar los datos", Toast.LENGTH_SHORT).show();
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<RegisterResponse> call, Throwable t) {
+                        // Si hubo un fallo en la conexión
+                        Toast.makeText(RegisterActivity3.this, "Error de conexión: " + t.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
 
                 Intent intent = new Intent(RegisterActivity3.this, LoginActivity.class);
                 startActivity(intent);
