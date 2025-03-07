@@ -27,6 +27,7 @@ import androidx.appcompat.widget.AppCompatImageButton;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.proyectomarzo.flashmeet.models.RegisterRequest;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -54,6 +55,9 @@ public class RegisterActivity extends AppCompatActivity {
             startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
             finish();
         });
+
+
+
     }
 
 
@@ -64,13 +68,11 @@ public class RegisterActivity extends AppCompatActivity {
         String password = etPassword.getText().toString().trim();
         String confirmPassword = etConfirmPassword.getText().toString().trim();
 
-        // Validación del nombre
         if (TextUtils.isEmpty(name)) {
             etName.setError("El nombre es obligatorio");
             return;
         }
 
-        // Validación del correo electrónico
         if (TextUtils.isEmpty(email)) {
             etEmail.setError("El correo es obligatorio");
             return;
@@ -80,7 +82,6 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        // Validación de la contraseña
         if (TextUtils.isEmpty(password)) {
             etPassword.setError("La contraseña es obligatoria");
             return;
@@ -90,7 +91,6 @@ public class RegisterActivity extends AppCompatActivity {
             return;
         }
 
-        // Validación de la confirmación de la contraseña
         if (!password.equals(confirmPassword)) {
             etConfirmPassword.setError("Las contraseñas no coinciden");
             return;
@@ -98,7 +98,6 @@ public class RegisterActivity extends AppCompatActivity {
 
         progressBar.setVisibility(View.VISIBLE);
 
-        // Guardar los datos del usuario
         SharedPreferences prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("name", name);
@@ -106,13 +105,13 @@ public class RegisterActivity extends AppCompatActivity {
         editor.putString("password", password);
         editor.apply();
 
-        // Simular un retraso en el proceso de registro
         new android.os.Handler().postDelayed(() -> {
             progressBar.setVisibility(View.GONE);
             Toast.makeText(RegisterActivity.this, "Registro exitoso", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(RegisterActivity.this, RegisterActivity2.class);
             startActivity(intent);
             finish();
-        }, 1500); // Retraso de 1.5 segundos
+        }, 1500);
     }
+
 }

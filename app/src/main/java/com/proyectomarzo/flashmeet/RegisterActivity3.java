@@ -2,6 +2,7 @@ package com.proyectomarzo.flashmeet;
 
 import android.Manifest;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -20,15 +21,24 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
+import com.google.android.gms.location.LocationServices;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.slider.Slider;
 import com.google.android.gms.location.FusedLocationProviderClient;
+import com.proyectomarzo.flashmeet.api.ApiClient;
+import com.proyectomarzo.flashmeet.api.ApiService;
+import com.proyectomarzo.flashmeet.models.RegisterRequest;
+import com.proyectomarzo.flashmeet.models.RegisterResponse;
 
+import java.io.File;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
+
+import retrofit2.Call;
 
 public class RegisterActivity3 extends AppCompatActivity {
 
@@ -38,9 +48,13 @@ public class RegisterActivity3 extends AppCompatActivity {
     private Slider sliderDistance;
     private MaterialButton btnRegistrar;
     private String ubicacion = "No disponible";
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 100;
-    private FusedLocationProviderClient fusedLocationProviderClient;
 
+    private FusedLocationProviderClient fusedLocationProviderClient;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1;
+    private double latitude;
+    private double longitude;
+    private String coordenadas;
+    private FusedLocationProviderClient fusedLocationClient;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,16 +69,26 @@ public class RegisterActivity3 extends AppCompatActivity {
         btnRegistrar = findViewById(R.id.btnLogin);
 
         tvLocation.setText(ubicacion);
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        Button getLocationButton = findViewById(R.id.btnGetLocation); // ID corregido
+
+        getLocationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkLocationPermission();
+            }
+        });
+
 
 
         etFecha.setOnClickListener(v -> {
-            // Obtén la fecha actual
+
             Calendar calendar = Calendar.getInstance();
             int year = calendar.get(Calendar.YEAR);
             int month = calendar.get(Calendar.MONTH);
             int day = calendar.get(Calendar.DAY_OF_MONTH);
 
-            // Crea un DatePickerDialog
+
             DatePickerDialog datePickerDialog = new DatePickerDialog(
                     RegisterActivity3.this,
                     (view, yearSelected, monthOfYear, dayOfMonth) -> {
@@ -82,31 +106,60 @@ public class RegisterActivity3 extends AppCompatActivity {
             datePickerDialog.show();
         });
 
-        // Configuración del Spinner para Sexo
+
         String[] sexos = {"Masculino", "Femenino", "Otro"};
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, sexos);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerSexo.setAdapter(adapter);
 
         btnRegistrar.setOnClickListener(v -> {
-            String fecha = etFecha.getText().toString().trim();
+            String fechaNacimiento = etFecha.getText().toString().trim();
             String descripcion = etDescripcion.getText().toString().trim();
             String sexo = spinnerSexo.getSelectedItem().toString().trim();
-            String distancia = String.valueOf(sliderDistance.getValue());
+            int distancia = (int) sliderDistance.getValue();
 
-            if (fecha.isEmpty() || descripcion.isEmpty() || sexo.isEmpty()) {
+            if (fechaNacimiento.isEmpty() || descripcion.isEmpty() || sexo.isEmpty()) {
                 Toast.makeText(RegisterActivity3.this, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show();
             } else {
                 SharedPreferences sharedPreferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();
 
-                editor.putString("fechaNacimiento", fecha);
+                editor.putString("fechaNacimiento", fechaNacimiento);
                 editor.putString("descripcion", descripcion);
                 editor.putString("sexo", sexo);
                 editor.putString("ubicacion", ubicacion);
-                editor.putString("distanciaBusqueda", distancia);
+                editor.putInt("distancia", distancia);
 
                 editor.apply();
+
+                Context context;
+                File[] imageFiles = new File[6];
+
+
+
+
+                String name = sharedPreferences.getString("name", null);
+                String password = sharedPreferences.getString("password",null);
+                String email = sharedPreferences.getString("email",null);
+                String imagePath1 = sharedPreferences.getString("image_path_" + 0, null);
+                String imagePath2 = sharedPreferences.getString("image_path_" + 1, null);
+                String imagePath3 = sharedPreferences.getString("image_path_" + 2, null);
+                String imagePath4 = sharedPreferences.getString("image_path_" + 3, null);
+                String imagePath5 = sharedPreferences.getString("image_path_" + 4, null);
+                String imagePath6 = sharedPreferences.getString("image_path_" + 5, null);
+                sexo = sharedPreferences.getString("sexo",null);
+                String posicion = sharedPreferences.getString("posicion",null);
+                fechaNacimiento = sharedPreferences.getString("fechaNacimiento",null);
+                descripcion = sharedPreferences.getString("descripcion",null);
+                distancia = sharedPreferences.getInt("distancia",-1);
+
+
+
+
+
+                RegisterRequest registerRequest = new RegisterRequest(name, password, email, imagePath1, imagePath2,imagePath3,imagePath4,imagePath5,imagePath6,sexo,posicion,fechaNacimiento,descripcion,distancia);
+                ApiService apiService = ApiClient.getClient().create(ApiService.class);
+                Call<RegisterResponse> call = apiService.registerUser(registerRequest);
 
                 Intent intent = new Intent(RegisterActivity3.this, LoginActivity.class);
                 startActivity(intent);
@@ -130,11 +183,16 @@ public class RegisterActivity3 extends AppCompatActivity {
                     longitude = location.getLongitude();
                     System.out.println("Latitud: " + latitude + ", Longitud: " + longitude);
 
-                    // Guarda las coordenadas en SharedPreferences
+
                     SharedPreferences sharedPreferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     editor.putString("latitude", String.valueOf(latitude));
                     editor.putString("longitude", String.valueOf(longitude));
+                    DecimalFormat decimalFormat = new DecimalFormat("#.#");
+                    latitude = Double.parseDouble(decimalFormat.format(latitude));
+                    longitude = Double.parseDouble(decimalFormat.format(longitude));
+                    ubicacion = latitude+","+longitude;
+                    editor.putString("posicion",ubicacion);
                     editor.apply();
 
                 } else {

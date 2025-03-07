@@ -1,6 +1,7 @@
 package com.proyectomarzo.flashmeet;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -27,8 +28,8 @@ public class RegisterActivity2 extends AppCompatActivity {
     private MaterialButton btnImages;
     private GridLayout gridLayout;
     private ImageButton[] imageButtons = new ImageButton[6];
-    private Uri[] imageUris = new Uri[6]; // Aquí guardamos las URIs de las imágenes
-    private File[] imageFiles = new File[6]; // Aquí guardamos los archivos de las imágenes
+    private Uri[] imageUris = new Uri[6];
+    private File[] imageFiles = new File[6];
     private int selectedIndex = -1;
 
     private final ActivityResultLauncher<Intent> imagePickerLauncher = registerForActivityResult(
@@ -109,12 +110,24 @@ public class RegisterActivity2 extends AppCompatActivity {
 
         return file;
     }
+    private void saveImagesToSharedPreferences() {
+        SharedPreferences sharedPreferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        for (int i = 0; i < imageFiles.length; i++) {
+            if (imageFiles[i] != null) {
+
+                editor.putString("image_path_" + i, imageFiles[i].getAbsolutePath());
+            }
+        }
+
+        editor.apply();
+        Toast.makeText(this, "Imágenes guardadas correctamente", Toast.LENGTH_SHORT).show();
+    }
 
     private void sendImagesToBackend() {
-        //mandar las imagenes
 
-
-
+        saveImagesToSharedPreferences();
         Intent intent = new Intent(RegisterActivity2.this, RegisterActivity3.class);
         startActivity(intent);
         finish();
