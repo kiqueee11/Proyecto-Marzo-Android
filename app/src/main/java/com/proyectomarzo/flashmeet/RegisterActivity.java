@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
@@ -55,20 +56,31 @@ public class RegisterActivity extends AppCompatActivity {
         });
     }
 
+
+
     private void registerUser() {
         String name = etName.getText().toString().trim();
         String email = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
         String confirmPassword = etConfirmPassword.getText().toString().trim();
 
+        // Validación del nombre
         if (TextUtils.isEmpty(name)) {
             etName.setError("El nombre es obligatorio");
             return;
         }
+
+        // Validación del correo electrónico
         if (TextUtils.isEmpty(email)) {
             etEmail.setError("El correo es obligatorio");
             return;
         }
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            etEmail.setError("Correo electrónico no válido");
+            return;
+        }
+
+        // Validación de la contraseña
         if (TextUtils.isEmpty(password)) {
             etPassword.setError("La contraseña es obligatoria");
             return;
@@ -77,6 +89,8 @@ public class RegisterActivity extends AppCompatActivity {
             etPassword.setError("La contraseña debe tener al menos 6 caracteres");
             return;
         }
+
+        // Validación de la confirmación de la contraseña
         if (!password.equals(confirmPassword)) {
             etConfirmPassword.setError("Las contraseñas no coinciden");
             return;
@@ -84,6 +98,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         progressBar.setVisibility(View.VISIBLE);
 
+        // Guardar los datos del usuario
         SharedPreferences prefs = getSharedPreferences("UserPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString("name", name);
@@ -91,7 +106,7 @@ public class RegisterActivity extends AppCompatActivity {
         editor.putString("password", password);
         editor.apply();
 
-
+        // Simular un retraso en el proceso de registro
         new android.os.Handler().postDelayed(() -> {
             progressBar.setVisibility(View.GONE);
             Toast.makeText(RegisterActivity.this, "Registro exitoso", Toast.LENGTH_SHORT).show();
