@@ -107,7 +107,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         new android.os.Handler().postDelayed(() -> {
             progressBar.setVisibility(View.GONE);
-            Toast.makeText(RegisterActivity.this, "Registro exitoso", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegisterActivity.this, "exito", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(RegisterActivity.this, RegisterActivity2.class);
             startActivity(intent);
             finish();

@@ -38,6 +38,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Locale;
 
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -156,34 +159,83 @@ public class RegisterActivity3 extends AppCompatActivity {
                 distancia = sharedPreferences.getInt("distancia",-1);
 
 
+                assert imagePath1 != null;
+                File file1 = new File(imagePath1);
+                RequestBody requestBody1 = RequestBody.create(MediaType.parse("image/*"), file1);
+                MultipartBody.Part image1Part = MultipartBody.Part.createFormData("image1", file1.getName(), requestBody1);
+
+                assert imagePath2 != null;
+                File file2 = new File(imagePath2);
+                RequestBody requestBody2 = RequestBody.create(MediaType.parse("image/*"), file2);
+                MultipartBody.Part image2Part = MultipartBody.Part.createFormData("image2", file2.getName(), requestBody2);
+
+                assert imagePath3 != null;
+                File file3 = new File(imagePath3);
+                RequestBody requestBody3 = RequestBody.create(MediaType.parse("image/*"), file3);
+                MultipartBody.Part image3Part = MultipartBody.Part.createFormData("image3", file3.getName(), requestBody3);
+
+                assert imagePath4 != null;
+                File file4 = new File(imagePath4);
+                RequestBody requestBody4 = RequestBody.create(MediaType.parse("image/*"), file4);
+                MultipartBody.Part image4Part = MultipartBody.Part.createFormData("image4", file4.getName(), requestBody4);
+
+                assert imagePath5 != null;
+                File file5 = new File(imagePath5);
+                RequestBody requestBody5 = RequestBody.create(MediaType.parse("image/*"), file5);
+                MultipartBody.Part image5Part = MultipartBody.Part.createFormData("image5", file5.getName(), requestBody5);
+
+                assert imagePath6 != null;
+                File file6 = new File(imagePath6);
+                RequestBody requestBody6 = RequestBody.create(MediaType.parse("image/*"), file6);
+                MultipartBody.Part image6Part = MultipartBody.Part.createFormData("image6", file6.getName(), requestBody6);
+
+                RequestBody nombreRequest = RequestBody.create(MediaType.parse("text/plain"), nombre);
+                RequestBody passwordRequest = RequestBody.create(MediaType.parse("text/plain"), password);
+                RequestBody emailRequest = RequestBody.create(MediaType.parse("text/plain"), email);
+                RequestBody sexoRequest = RequestBody.create(MediaType.parse("text/plain"), sexo);
+                RequestBody posicionRequest = RequestBody.create(MediaType.parse("text/plain"), posicion);
+                RequestBody fechaNacimientoRequest = RequestBody.create(MediaType.parse("text/plain"), fechaNacimiento);
+                RequestBody descripcionRequest = RequestBody.create(MediaType.parse("text/plain"), descripcion);
+                String distanciaStr = String.valueOf(distancia);
+                RequestBody distanciaRequest = RequestBody.create(MediaType.parse("text/plain"), distanciaStr);
 
 
 
-                RegisterRequest registerRequest = new RegisterRequest(nombre,password,email,imagePath1,imagePath2,imagePath3,imagePath4,imagePath5,imagePath6,sexo,posicion,fechaNacimiento,descripcion,distancia);
                 ApiService apiService = ApiClient.getClient().create(ApiService.class);
-                Call<RegisterResponse> call = apiService.registerUser(registerRequest);
+                Call<RegisterResponse> call = apiService.registerUser(
+                        nombreRequest,
+                        passwordRequest,
+                        emailRequest,
+                        sexoRequest,
+                        posicionRequest,
+                        fechaNacimientoRequest,
+                        descripcionRequest,
+                        distanciaRequest,
+                        image1Part,
+                        image2Part,
+                        image3Part,
+                        image4Part,
+                        image5Part,
+                        image6Part
+                );
+
 
 
                 call.enqueue(new Callback<RegisterResponse>() {
                     @Override
                     public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
                         if (response.isSuccessful()) {
-
                             RegisterResponse responseModel = response.body();
                             String status = responseModel.getStatus();
                             String message = responseModel.getMessage();
-
-
                             Toast.makeText(RegisterActivity3.this, "Respuesta: " + message, Toast.LENGTH_SHORT).show();
                         } else {
-
                             Toast.makeText(RegisterActivity3.this, "Error al enviar los datos", Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<RegisterResponse> call, Throwable t) {
-
                         Toast.makeText(RegisterActivity3.this, "Error de conexión: " + t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });

@@ -72,10 +72,10 @@ public class RegisterActivity2 extends AppCompatActivity {
         }
 
         btnImages.setOnClickListener(v -> {
-            if (hasAtLeastOneImage()) {
+            if ((hasAllImages())) {
                 sendImagesToBackend();
             } else {
-                Toast.makeText(this, "Debes seleccionar al menos una imagen", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Debes usar 6 imagenes", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -87,11 +87,13 @@ public class RegisterActivity2 extends AppCompatActivity {
         imagePickerLauncher.launch(intent);
     }
 
-    private boolean hasAtLeastOneImage() {
+    private boolean hasAllImages() {
         for (File file : imageFiles) {
-            if (file != null) return true;
+            if (file == null) {
+                return false;
+            }
         }
-        return false;
+        return true;
     }
 
     private File convertUriToFile(Uri uri) throws IOException {

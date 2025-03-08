@@ -10,20 +10,43 @@ import com.proyectomarzo.flashmeet.models.RegisterResponse;
 
 import java.util.List;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
+import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 public interface ApiService {
-
+    @Multipart
     @POST("auth/auth/signup")
-    Call<RegisterResponse> registerUser(@Body RegisterRequest registerRequest);
+    Call<RegisterResponse> registerUser(
+            @Part("nombre") RequestBody nombre,
+            @Part("clave") RequestBody password,
+            @Part("email") RequestBody email,
+            @Part("sexo") RequestBody sexo,
+            @Part("posicion") RequestBody posicion,
+            @Part("fechaNacimiento") RequestBody fechaNacimiento,
+            @Part("descripcion") RequestBody descripcion,
+            @Part("distancia") RequestBody distancia,
+            @Part MultipartBody.Part image1,
+            @Part MultipartBody.Part image2,
+            @Part MultipartBody.Part image3,
+            @Part MultipartBody.Part image4,
+            @Part MultipartBody.Part image5,
+            @Part MultipartBody.Part image6
+    );
+    @Multipart
+    @POST("auth/auth/iniciarSesion")
+    Call<LoginResponse> loginUser(
+            @Part("email") RequestBody email,
+            @Part("clave") RequestBody clave
 
-    @POST("auth/login")
-    Call<LoginResponse> loginUser(@Body LoginRequest loginRequest);
+    );
 
     @GET("messages")
     Call<List<Message>> getMessages(@Header("Authorization") String token, @Query("recipient") String recipientEmail);
