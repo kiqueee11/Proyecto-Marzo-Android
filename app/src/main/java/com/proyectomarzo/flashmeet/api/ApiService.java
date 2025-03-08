@@ -19,7 +19,7 @@ import retrofit2.http.Query;
 
 public interface ApiService {
 
-    @POST("auth/auth/register")
+    @POST("auth/auth/signup")
     Call<RegisterResponse> registerUser(@Body RegisterRequest registerRequest);
 
     @POST("auth/login")

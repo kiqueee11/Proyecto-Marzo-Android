@@ -63,12 +63,12 @@ public class RegisterActivity extends AppCompatActivity {
 
 
     private void registerUser() {
-        String name = etName.getText().toString().trim();
+        String nombre = etName.getText().toString().trim();
         String email = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
         String confirmPassword = etConfirmPassword.getText().toString().trim();
 
-        if (TextUtils.isEmpty(name)) {
+        if (TextUtils.isEmpty(nombre)) {
             etName.setError("El nombre es obligatorio");
             return;
         }
@@ -100,7 +100,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         SharedPreferences prefs = getSharedPreferences("UserPreferences", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("name", name);
+        editor.putString("nombre", nombre);
         editor.putString("email", email);
         editor.putString("password", password);
         editor.apply();

@@ -140,7 +140,7 @@ public class RegisterActivity3 extends AppCompatActivity {
 
 
 
-                String name = sharedPreferences.getString("name", null);
+                String nombre = sharedPreferences.getString("nombre", null);
                 String password = sharedPreferences.getString("password",null);
                 String email = sharedPreferences.getString("email",null);
                 String imagePath1 = sharedPreferences.getString("image_path_" + 0, null);
@@ -159,7 +159,7 @@ public class RegisterActivity3 extends AppCompatActivity {
 
 
 
-                RegisterRequest registerRequest = new RegisterRequest(name, password, email, imagePath1, imagePath2,imagePath3,imagePath4,imagePath5,imagePath6,sexo,posicion,fechaNacimiento,descripcion,distancia);
+                RegisterRequest registerRequest = new RegisterRequest(nombre,password,email,imagePath1,imagePath2,imagePath3,imagePath4,imagePath5,imagePath6,sexo,posicion,fechaNacimiento,descripcion,distancia);
                 ApiService apiService = ApiClient.getClient().create(ApiService.class);
                 Call<RegisterResponse> call = apiService.registerUser(registerRequest);
 
@@ -168,22 +168,22 @@ public class RegisterActivity3 extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<RegisterResponse> call, Response<RegisterResponse> response) {
                         if (response.isSuccessful()) {
-                            // Si la respuesta es exitosa
-                            RegisterResponse responseModel = response.body();  // Aquí obtenemos la respuesta deserializada
-                            String status = responseModel.getStatus();  // "success"
-                            String message = responseModel.getMessage();  // "Datos recibidos correctamente"
 
-                            // Hacer algo con esos datos
+                            RegisterResponse responseModel = response.body();
+                            String status = responseModel.getStatus();
+                            String message = responseModel.getMessage();
+
+
                             Toast.makeText(RegisterActivity3.this, "Respuesta: " + message, Toast.LENGTH_SHORT).show();
                         } else {
-                            // Si la respuesta no fue exitosa
+
                             Toast.makeText(RegisterActivity3.this, "Error al enviar los datos", Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void onFailure(Call<RegisterResponse> call, Throwable t) {
-                        // Si hubo un fallo en la conexión
+
                         Toast.makeText(RegisterActivity3.this, "Error de conexión: " + t.getMessage(), Toast.LENGTH_SHORT).show();
                     }
                 });
