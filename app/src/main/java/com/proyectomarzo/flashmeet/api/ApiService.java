@@ -1,5 +1,6 @@
 package com.proyectomarzo.flashmeet.api;
 
+import com.proyectomarzo.flashmeet.models.ImageResponse;
 import com.proyectomarzo.flashmeet.models.LoginRequest;
 import com.proyectomarzo.flashmeet.models.LoginResponse;
 import com.proyectomarzo.flashmeet.models.Message;
@@ -7,11 +8,14 @@ import com.proyectomarzo.flashmeet.models.MessageRequest;
 import com.proyectomarzo.flashmeet.models.MessageResponse;
 import com.proyectomarzo.flashmeet.models.RegisterRequest;
 import com.proyectomarzo.flashmeet.models.RegisterResponse;
+import com.proyectomarzo.flashmeet.models.SettingsResponse;
+import com.proyectomarzo.flashmeet.models.UserResponse;
 
 import java.util.List;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -47,10 +51,17 @@ public interface ApiService {
             @Part("clave") RequestBody clave
 
     );
-
-    @GET("messages")
+    @POST("users/get-user-data")
+    Call<UserResponse> getUserProfile(@Header("Authorization") String token);
+    @POST("/settings/get-settings")
+    Call<SettingsResponse> getSettings(@Header("Authorization") String token);
+    @POST("/settings/save-settings")
+    Call<SettingsResponse> saveSettings(@Header("Authorization") String token);
+    @GET("/get-media")
+    Call<ImageResponse> getMedia(@Query("fileName") String fileName);
+    @GET("/messages")
     Call<List<Message>> getMessages(@Header("Authorization") String token, @Query("recipient") String recipientEmail);
 
-    @POST("messages")
+    @POST("/messages")
     Call<MessageResponse> sendMessage(@Header("Authorization") String token, @Body MessageRequest messageRequest);
 }

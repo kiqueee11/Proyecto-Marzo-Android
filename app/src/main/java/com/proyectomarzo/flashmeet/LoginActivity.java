@@ -1,6 +1,7 @@
 package com.proyectomarzo.flashmeet;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -53,9 +54,15 @@ public class LoginActivity extends AppCompatActivity {
                         if (response.isSuccessful()) {
                             // Login exitoso
                             LoginResponse responseModel = response.body();
-                            String status = responseModel.getToken();
+                            String token = responseModel.getData().getToken();
+                            String userId = responseModel.getData().getUserId();
+                            SharedPreferences sharedPreferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
+                            SharedPreferences.Editor editor = sharedPreferences.edit();
+                            editor.putString("token", token);
+                            editor.putString("id",userId);
+                            editor.apply();
                             // Guardar el token o cualquier otro dato necesario para la sesión
-                            Toast.makeText(LoginActivity.this, "Login exitoso. Token: " + status, Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginActivity.this, "Login exitoso. Token: " + token, Toast.LENGTH_SHORT).show();
 
                             // Avanzar a la siguiente actividad solo si el login fue exitoso
                             navigateToChatActivity();
