@@ -42,13 +42,8 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textInfo">
 
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/etFecha"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/rounded_input"
-            android:hint="Fecha de nacimiento (yyyy-MM-dd)"
-            android:inputType="textPersonName" />
+
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <!-- Correo electrónico -->
@@ -134,7 +129,19 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tilName"
             tools:layout_editor_absoluteX="31dp">
-
+            <TextView
+                android:id="@+id/tvFecha"
+                android:layout_width="match_parent"
+                android:layout_margin="@dimen/_8sdp"
+                android:layout_height="wrap_content"
+                android:background="@drawable/rounded_button"
+                android:textColor="@color/white"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center"
+                android:padding="16dp"
+                android:text="Selecciona la fecha"
+                android:textSize="18sp" />
             <!-- Sexo (Spinner) -->
             <com.google.android.material.textview.MaterialTextView
                 android:layout_width="wrap_content"
@@ -162,7 +169,7 @@
                 android:id="@+id/btnGetLocation"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_margin="@dimen/_8sdp"
                 android:text="Obtener ubicación"
                 android:onClick="onRequestLocationButtonClick"
                 android:textColor="@color/white" />

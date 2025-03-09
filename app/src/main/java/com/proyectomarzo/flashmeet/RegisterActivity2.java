@@ -1,11 +1,10 @@
 package com.proyectomarzo.flashmeet;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
-import android.view.View;
+
 import android.widget.GridLayout;
 import android.widget.ImageButton;
 import android.widget.Toast;
@@ -15,6 +14,12 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.button.MaterialButton;
+import com.proyectomarzo.flashmeet.R;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,9 +29,8 @@ public class RegisterActivity2 extends AppCompatActivity {
     private GridLayout gridLayout;
     private ImageButton[] imageButtons = new ImageButton[6];
     private Uri[] imageUris = new Uri[6];
+    private File[] imageFiles = new File[6];
     private int selectedIndex = -1;
-
-    private SharedPreferences sharedPreferences;
 
     private final ActivityResultLauncher<Intent> imagePickerLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
@@ -36,6 +40,13 @@ public class RegisterActivity2 extends AppCompatActivity {
                     if (selectedIndex != -1 && selectedImage != null) {
                         imageUris[selectedIndex] = selectedImage;
                         imageButtons[selectedIndex].setImageURI(selectedImage);
+                        try {
+                            // Convertimos la URI seleccionada en un archivo
+                            imageFiles[selectedIndex] = convertUriToFile(selectedImage);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            Toast.makeText(RegisterActivity2.this, "Error al guardar la imagen", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
             }
@@ -45,8 +56,6 @@ public class RegisterActivity2 extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register2);
-
-        sharedPreferences = getSharedPreferences("UserPreferences", Context.MODE_PRIVATE);
 
         btnImages = findViewById(R.id.btnImages);
         gridLayout = findViewById(R.id.grid);
@@ -58,25 +67,17 @@ public class RegisterActivity2 extends AppCompatActivity {
         imageButtons[5] = findViewById(R.id.img_photo6);
 
         for (int i = 0; i < imageButtons.length; i++) {
-            final int index = i;  // Asegúrate de que index sea final
+            final int index = i;
             imageButtons[i].setOnClickListener(v -> openGallery(index));
         }
 
         btnImages.setOnClickListener(v -> {
-            if (hasAtLeastOneImage()) {
-                saveImagesToPreferences();
-                goToNextActivity();
+            if ((hasAllImages())) {
+                sendImagesToBackend();
             } else {
-                Toast.makeText(this, "Debes seleccionar al menos una imagen", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Debes usar 6 imagenes", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    private void goToNextActivity() {
-
-        startActivity(new Intent(RegisterActivity2.this, RegisterActivity3.class));
-        finish();
-
     }
 
     private void openGallery(int index) {
@@ -86,19 +87,52 @@ public class RegisterActivity2 extends AppCompatActivity {
         imagePickerLauncher.launch(intent);
     }
 
-    private boolean hasAtLeastOneImage() {
-        for (Uri uri : imageUris) {
-            if (uri != null) return true;
-        }
-        return false;
-    }
-
-    private void saveImagesToPreferences() {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        for (int i = 0; i < imageUris.length; i++) {
-            if (imageUris[i] != null) {
-                editor.putString("image" + i, imageUris[i].toString());
+    private boolean hasAllImages() {
+        for (File file : imageFiles) {
+            if (file == null) {
+                return false;
             }
         }
+        return true;
     }
+
+    private File convertUriToFile(Uri uri) throws IOException {
+        InputStream inputStream = getContentResolver().openInputStream(uri);
+        File file = new File(getExternalFilesDir(null), "image_" + System.currentTimeMillis() + ".jpg");
+
+        try (FileOutputStream outputStream = new FileOutputStream(file)) {
+            byte[] buffer = new byte[1024];
+            int length;
+            while ((length = inputStream.read(buffer)) != -1) {
+                outputStream.write(buffer, 0, length);
+            }
+        } finally {
+            inputStream.close();
+        }
+
+        return file;
+    }
+    private void saveImagesToSharedPreferences() {
+        SharedPreferences sharedPreferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+
+        for (int i = 0; i < imageFiles.length; i++) {
+            if (imageFiles[i] != null) {
+
+                editor.putString("image_path_" + i, imageFiles[i].getAbsolutePath());
+            }
+        }
+
+        editor.apply();
+        Toast.makeText(this, "Imágenes guardadas correctamente", Toast.LENGTH_SHORT).show();
+    }
+
+    private void sendImagesToBackend() {
+
+        saveImagesToSharedPreferences();
+        Intent intent = new Intent(RegisterActivity2.this, RegisterActivity3.class);
+        startActivity(intent);
+        finish();
+    }
+
 }

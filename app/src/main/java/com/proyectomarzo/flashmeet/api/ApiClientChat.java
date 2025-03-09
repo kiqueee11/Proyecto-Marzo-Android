@@ -5,9 +5,10 @@ import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-public class ApiClient {
+public class ApiClientChat {
+
     private static Retrofit retrofit = null;
-    private static final String BASE_URL = "http://192.168.1.23:8089/";
+    private static final String BASE_URL = "http://192.168.1.23:8083/";
 
     public static Retrofit getClient() {
         if (retrofit == null) {
@@ -25,4 +26,5 @@ public class ApiClient {
         }
         return retrofit;
     }
+
 }

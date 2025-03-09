@@ -1,6 +1,7 @@
 package com.proyectomarzo.flashmeet;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -24,6 +25,14 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.proyectomarzo.flashmeet.api.ApiService;
+import com.proyectomarzo.flashmeet.models.UserResponse;
+import com.proyectomarzo.flashmeet.services.UserServices;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+
 public class EditProfileActivity extends AppCompatActivity {
 
     private static final int MAX_DESCRIPTION_WORDS = 50;
@@ -39,15 +48,95 @@ public class EditProfileActivity extends AppCompatActivity {
     private String instagramLink = "";
     private String facebookLink = "";
     private String twitterLink = "";
+    private UserServices userServices;
+
+    private String token;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit_profile);
 
+        userServices = new UserServices();
+
+        // Obtener el token de SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
+        token = sharedPreferences.getString("token", "");
+
         initViews();
         setupListeners();
-        initPhotoViews();
+
+        if (!token.isEmpty()) {
+            loadUserProfile();
+        } else {
+            Toast.makeText(this, "No hay token de autenticación", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void loadUserProfile() {
+        if (token != null && !token.isEmpty()) {
+            // Si el token es válido, puedes hacer la llamada a la API
+            userServices.getUser(token, new UserServices.UserCallback() {
+                @Override
+                public void onUserReceived(UserResponse.UserData userData) {
+                    updateProfileUI(userData);
+                }
+
+                @Override
+                public void onError(Throwable t) {
+                    Toast.makeText(EditProfileActivity.this, "Error al cargar los datos del perfil", Toast.LENGTH_SHORT).show();
+                }
+            });
+        }
+    }
+
+    private void updateProfileUI(UserResponse.UserData userProfile) {
+        // Asegúrate de que el objeto userProfile no sea nulo
+        if (userProfile == null) {
+            Toast.makeText(this, "Datos del perfil no válidos", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Actualizar nombre
+        tvName.setText(userProfile.getNombre() != null ? userProfile.getNombre() : "Nombre no disponible");
+
+        // Actualizar la descripción
+        tvDescription.setText(userProfile.getDescripcion() != null ? userProfile.getDescripcion() : "Descripción no disponible");
+
+        // Actualizar sexo
+        tvGender.setText(userProfile.getSexo() != null ? userProfile.getSexo() : "Sexo no disponible");
+
+        // Actualizar edad
+        tvAge.setText(userProfile.getFechaNacimiento() != null ? userProfile.getFechaNacimiento() : "Fecha de nacimiento no disponible");
+
+        // Actualizar imagen de perfil
+        if (userProfile.getImagen1() != null && !userProfile.getImagen1().isEmpty()) {
+            Glide.with(this)
+                    .load(userProfile.getImagen1())
+                    .centerCrop()
+                    .into(profileImage);
+        } else {
+            profileImage.setImageResource(R.drawable.photo_placeholder);
+        }
+
+        // Cargar otras imágenes
+        loadImage(userProfile.getImagen2(), 0);
+        loadImage(userProfile.getImagen3(), 1);
+        loadImage(userProfile.getImagen4(), 2);
+        loadImage(userProfile.getImagen5(), 3);
+        loadImage(userProfile.getImagen6(), 4);
+    }
+
+    // Método auxiliar para cargar imágenes
+    private void loadImage(String imageUrl, int index) {
+        if (imageUrl != null && !imageUrl.isEmpty()) {
+            Glide.with(this)
+                    .load(imageUrl)
+                    .centerCrop()
+                    .into(photoViews.get(index));
+        } else {
+            photoViews.get(index).setImageResource(R.drawable.photo_placeholder); // Usar un placeholder si no hay imagen
+        }
     }
 
     private void initViews() {
@@ -59,26 +148,6 @@ public class EditProfileActivity extends AppCompatActivity {
         tvGender = findViewById(R.id.tv_gender);
         tvDescription = findViewById(R.id.tv_description);
         profileImage = findViewById(R.id.img_profile_background);
-    }
-
-    private void initPhotoViews() {
-        photoViews = new ArrayList<>();
-        photoViews.add(findViewById(R.id.img_photo1));
-        photoViews.add(findViewById(R.id.img_photo2));
-        photoViews.add(findViewById(R.id.img_photo3));
-        photoViews.add(findViewById(R.id.img_photo4));
-        photoViews.add(findViewById(R.id.img_photo5));
-        photoViews.add(findViewById(R.id.img_photo6));
-
-        photoUris = new ArrayList<>();
-        for (int i = 0; i < photoViews.size(); i++) {
-            photoUris.add(null);
-        }
-
-        for (int i = 0; i < photoViews.size(); i++) {
-            final int index = i;
-            photoViews.get(i).setOnClickListener(v -> handlePhotoClick(index));
-        }
     }
 
     private void setupListeners() {
@@ -124,127 +193,6 @@ public class EditProfileActivity extends AppCompatActivity {
                 .show();
     }
 
-    private void handlePhotoClick(int index) {
-        currentPhotoIndex = index;
-
-        CharSequence[] options;
-        if (photoUris.get(index) == null) {
-            options = new CharSequence[]{"Agregar foto"};
-        } else {
-            options = new CharSequence[]{
-                    "Cambiar foto",
-                    "Eliminar foto",
-                    index == 0 ? "Ya es foto de perfil" : "Poner como foto de perfil"
-            };
-        }
-
-        new AlertDialog.Builder(this)
-                .setTitle("Opciones de foto")
-                .setItems(options, (dialog, which) -> {
-                    if (photoUris.get(index) == null || which == 0) {
-                        openPhotoPicker();
-                    } else if (which == 1) {
-                        removePhoto(index);
-                    } else if (which == 2 && index != 0) {
-                        setAsProfilePhoto(index);
-                    }
-                })
-                .show();
-    }
-
-    private void setAsProfilePhoto(int index) {
-        if (index == 0 || photoUris.get(index) == null) {
-            return;
-        }
-
-        Uri newProfileUri = photoUris.get(index);
-        Uri oldProfileUri = photoUris.get(0);
-
-        photoUris.set(0, newProfileUri);
-        photoUris.set(index, oldProfileUri);
-
-        if (oldProfileUri != null) {
-            loadPhotoImage(index, oldProfileUri);
-        } else {
-            photoViews.get(index).setImageDrawable(null);
-            photoViews.get(index).setBackground(getDrawable(R.drawable.photo_placeholder));
-        }
-        loadPhotoImage(0, newProfileUri);
-
-        loadProfileImage(newProfileUri);
-
-        Toast.makeText(this, "Foto establecida como perfil", Toast.LENGTH_SHORT).show();
-    }
-
-    private void openPhotoPicker() {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, REQUEST_PICK_IMAGE);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if (requestCode == REQUEST_PICK_IMAGE && resultCode == RESULT_OK && data != null) {
-            Uri selectedImageUri = data.getData();
-            if (currentPhotoIndex >= 0 && currentPhotoIndex < photoViews.size()) {
-                photoUris.set(currentPhotoIndex, selectedImageUri);
-                loadPhotoImage(currentPhotoIndex, selectedImageUri);
-
-                if (currentPhotoIndex == 0) {
-                    loadProfileImage(selectedImageUri);
-                }
-
-                Toast.makeText(this, "Foto actualizada", Toast.LENGTH_SHORT).show();
-            }
-        }
-    }
-
-    private void loadPhotoImage(int index, Uri uri) {
-        Glide.with(this)
-                .load(uri)
-                .centerCrop()
-                .into(photoViews.get(index));
-
-        photoViews.get(index).setBackground(null);
-    }
-
-    private void loadProfileImage(Uri uri) {
-        Glide.with(this)
-                .load(uri)
-                .centerCrop()
-                .into(profileImage);
-    }
-
-    private void removePhoto(int index) {
-        photoUris.set(index, null);
-        photoViews.get(index).setImageDrawable(null);
-        photoViews.get(index).setBackground(getDrawable(R.drawable.photo_placeholder));
-
-        if (index == 0) {
-            shiftPhotosUp();
-        }
-
-        Toast.makeText(this, "Foto eliminada", Toast.LENGTH_SHORT).show();
-    }
-
-    private void shiftPhotosUp() {
-        for (int i = 1; i < photoUris.size(); i++) {
-            if (photoUris.get(i) != null) {
-                Uri photoToMove = photoUris.get(i);
-                photoUris.set(0, photoToMove);
-                photoUris.set(i, null);
-
-                loadPhotoImage(0, photoToMove);
-                loadProfileImage(photoToMove);
-
-                photoViews.get(i).setImageDrawable(null);
-                photoViews.get(i).setBackground(getDrawable(R.drawable.photo_placeholder));
-                break;
-            }
-        }
-    }
-
     private void showEditDialog() {
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_edit_profile, null);
 
@@ -266,7 +214,8 @@ public class EditProfileActivity extends AppCompatActivity {
 
         etDescription.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
@@ -281,7 +230,8 @@ public class EditProfileActivity extends AppCompatActivity {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {}
+            public void afterTextChanged(Editable s) {
+            }
         });
 
         int initialWordCount = tvDescription.getText().toString().split("\\s+").length;
@@ -301,16 +251,30 @@ public class EditProfileActivity extends AppCompatActivity {
 
                     if (description.split("\\s+").length > MAX_DESCRIPTION_WORDS) {
                         Toast.makeText(this, "La descripción excede el límite de palabras", Toast.LENGTH_SHORT).show();
-                        return;
+                    } else {
+                        // Lógica para guardar el perfil
+                        updateUserProfile(name, age, gender, description);
                     }
-
-                    tvName.setText(name);
-                    tvAge.setText(age);
-                    tvGender.setText(gender);
-                    tvDescription.setText(description);
                 })
                 .setNegativeButton("Cancelar", null)
                 .show();
     }
 
+    private void updateUserProfile(String name, String age, String gender, String description) {
+        // Aquí deberías realizar una llamada API para guardar los cambios realizados en el perfil
+        // Ejemplo usando el servicio de usuario:
+        userServices.getUser(token, new UserServices.UserCallback() {
+            @Override
+            public void onUserReceived(UserResponse.UserData userData) {
+                // Aquí actualizas la UI con los nuevos datos
+                Toast.makeText(EditProfileActivity.this, "Perfil actualizado con éxito", Toast.LENGTH_SHORT).show();
+                updateProfileUI(userData);
+            }
+
+            @Override
+            public void onError(Throwable t) {
+                Toast.makeText(EditProfileActivity.this, "Error al actualizar perfil", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 }

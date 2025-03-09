@@ -1,8 +1,15 @@
 package com.proyectomarzo.flashmeet.models;
 
-public class RegisterRequest {
+public class UserRequest {
+
+    private String userId;
+    private String token;
+    private String refreshToken;
+    private String tokenUID;
+    private String refreshTokenUID;
+    private double tokenExpiration;
+    private double refreshTokenExpiration;
     private String nombre;
-    private String password;
     private String email;
     private String imagen1;
     private String imagen2;
@@ -16,9 +23,15 @@ public class RegisterRequest {
     private String descripcion;
     private int distancia;
 
-    public RegisterRequest(String nombre, String password, String email, String imagen1, String imagen2, String imagen3, String imagen4, String imagen5, String imagen6, String sexo, String posicion, String fechaNacimiento, String descripcion, int distancia) {
+    public UserRequest(String userId, String token, String refreshToken, String tokenUID, String refreshTokenUID, double tokenExpiration, double refreshTokenExpiration, String nombre, String email, String imagen1, String imagen2, String imagen3, String imagen4, String imagen5, String imagen6, String sexo, String posicion, String fechaNacimiento, String descripcion, int distancia) {
+        this.userId = userId;
+        this.token = token;
+        this.refreshToken = refreshToken;
+        this.tokenUID = tokenUID;
+        this.refreshTokenUID = refreshTokenUID;
+        this.tokenExpiration = tokenExpiration;
+        this.refreshTokenExpiration = refreshTokenExpiration;
         this.nombre = nombre;
-        this.password = password;
         this.email = email;
         this.imagen1 = imagen1;
         this.imagen2 = imagen2;
@@ -33,20 +46,68 @@ public class RegisterRequest {
         this.distancia = distancia;
     }
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public String getRefreshToken() {
+        return refreshToken;
+    }
+
+    public void setRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
+
+    public String getTokenUID() {
+        return tokenUID;
+    }
+
+    public void setTokenUID(String tokenUID) {
+        this.tokenUID = tokenUID;
+    }
+
+    public String getRefreshTokenUID() {
+        return refreshTokenUID;
+    }
+
+    public void setRefreshTokenUID(String refreshTokenUID) {
+        this.refreshTokenUID = refreshTokenUID;
+    }
+
+    public double getTokenExpiration() {
+        return tokenExpiration;
+    }
+
+    public void setTokenExpiration(double tokenExpiration) {
+        this.tokenExpiration = tokenExpiration;
+    }
+
+    public double getRefreshTokenExpiration() {
+        return refreshTokenExpiration;
+    }
+
+    public void setRefreshTokenExpiration(double refreshTokenExpiration) {
+        this.refreshTokenExpiration = refreshTokenExpiration;
+    }
+
     public String getNombre() {
         return nombre;
     }
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 
     public String getEmail() {
@@ -145,3 +206,8 @@ public class RegisterRequest {
         this.distancia = distancia;
     }
 }
+
+
+
+
+

@@ -11,6 +11,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.Button;
 import android.widget.GridLayout;
@@ -26,6 +27,7 @@ import androidx.appcompat.widget.AppCompatImageButton;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
+import com.proyectomarzo.flashmeet.models.RegisterRequest;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -53,22 +55,33 @@ public class RegisterActivity extends AppCompatActivity {
             startActivity(new Intent(RegisterActivity.this, LoginActivity.class));
             finish();
         });
+
+
+
     }
 
+
+
     private void registerUser() {
-        String name = etName.getText().toString().trim();
+        String nombre = etName.getText().toString().trim();
         String email = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
         String confirmPassword = etConfirmPassword.getText().toString().trim();
 
-        if (TextUtils.isEmpty(name)) {
+        if (TextUtils.isEmpty(nombre)) {
             etName.setError("El nombre es obligatorio");
             return;
         }
+
         if (TextUtils.isEmpty(email)) {
             etEmail.setError("El correo es obligatorio");
             return;
         }
+        if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
+            etEmail.setError("Correo electrónico no válido");
+            return;
+        }
+
         if (TextUtils.isEmpty(password)) {
             etPassword.setError("La contraseña es obligatoria");
             return;
@@ -77,6 +90,7 @@ public class RegisterActivity extends AppCompatActivity {
             etPassword.setError("La contraseña debe tener al menos 6 caracteres");
             return;
         }
+
         if (!password.equals(confirmPassword)) {
             etConfirmPassword.setError("Las contraseñas no coinciden");
             return;
@@ -86,18 +100,18 @@ public class RegisterActivity extends AppCompatActivity {
 
         SharedPreferences prefs = getSharedPreferences("UserPreferences", MODE_PRIVATE);
         SharedPreferences.Editor editor = prefs.edit();
-        editor.putString("name", name);
+        editor.putString("nombre", nombre);
         editor.putString("email", email);
         editor.putString("password", password);
         editor.apply();
 
-
         new android.os.Handler().postDelayed(() -> {
             progressBar.setVisibility(View.GONE);
-            Toast.makeText(RegisterActivity.this, "Registro exitoso", Toast.LENGTH_SHORT).show();
+            Toast.makeText(RegisterActivity.this, "exito", Toast.LENGTH_SHORT).show();
             Intent intent = new Intent(RegisterActivity.this, RegisterActivity2.class);
             startActivity(intent);
             finish();
-        }, 1500); // Retraso de 1.5 segundos
+        }, 1500);
     }
+
 }

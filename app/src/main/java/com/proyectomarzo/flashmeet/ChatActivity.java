@@ -1,8 +1,10 @@
 package com.proyectomarzo.flashmeet;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -17,6 +19,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.proyectomarzo.flashmeet.R;
 import com.proyectomarzo.flashmeet.adapter.MessageAdapter;
 import com.proyectomarzo.flashmeet.models.Message;
+import com.proyectomarzo.flashmeet.models.UserRequest;
+import com.proyectomarzo.flashmeet.models.UserResponse;
+import com.proyectomarzo.flashmeet.services.ChatService;
+import com.proyectomarzo.flashmeet.services.UserServices;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,6 +39,12 @@ public class ChatActivity extends AppCompatActivity {
     private TextView userName;
     private Random random;
     private Handler handler;
+    ChatService chatService;
+    UserServices userServices;
+
+
+    UserResponse.UserData userData;
+
 
     private static final int REVEAL_DELAY = 30 * 1000;
 
@@ -40,7 +52,8 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
-
+        chatService = new ChatService();
+        userServices = new UserServices();
         recyclerView = findViewById(R.id.recycler_view);
         messageInput = findViewById(R.id.text_input);
         sendButton = findViewById(R.id.send);
@@ -67,19 +80,52 @@ public class ChatActivity extends AppCompatActivity {
         addFriendButton.setOnClickListener(v -> confirmAddFriend());
         viewProfileButton.setOnClickListener(v -> showProfileMessage());
         handler.postDelayed(this::showIdentityPopup, REVEAL_DELAY);
+        SharedPreferences sharedPreferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
+        String token = sharedPreferences.getString("token",null);
+
+
+
     }
 
     private void sendMessage() {
+
+
         String messageText = messageInput.getText().toString().trim();
         if (!messageText.isEmpty()) {
             messageList.add(new Message(messageText, "Me", Message.TYPE_SENT));
             messageAdapter.notifyItemInserted(messageList.size() - 1);
             recyclerView.smoothScrollToPosition(messageList.size() - 1);
             messageInput.setText("");
+            SharedPreferences sharedPreferences = getSharedPreferences("UserPreferences", MODE_PRIVATE);
+            String token = sharedPreferences.getString("token", null);
+
+            if (userServices != null && token != null) {
+                // Obtener los datos del usuario de forma segura
+                userServices.getUser(token, new UserServices.UserCallback() {
+                    @Override
+                    public void onUserReceived(UserResponse.UserData userData) {
+                        if (userData != null) {
+                            // Ahora puedes usar el userData de manera segura
+                            String email = userData.getEmail();
+                            chatService.enviarMensaje(token, email, messageText);
+                        } else {
+                            Log.e("ChatActivity", "No se recibió userData.");
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+                        Log.e("ChatActivity", "Error al obtener los datos del usuario", t);
+                    }
+                });
+            } else {
+                Log.e("ChatActivity", "userServices o token es null");
+            }
 
             simulateResponse();
         }
-    }
+        }
+
 
     private void simulateResponse() {
         recyclerView.postDelayed(() -> {
